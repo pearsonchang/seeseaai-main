@@ -57,7 +57,7 @@ const Navbar = () => {
           <h3 className='text-white text-2xl'>SeeSeaAI</h3>
         </div>
       </Link>
-      <ul className='text-white font-[500] text-xl list-none flex justify-around w-[40%]'>
+      <ul className='text-white font-[500] text-xl list-none hidden md:flex justify-around w-[40%]'>
         {['Publish', 'Token', 'Dataset', 'Help'].map((item, index) => (
           <li
             key={index}
