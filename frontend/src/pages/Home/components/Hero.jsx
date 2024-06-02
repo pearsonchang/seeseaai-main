@@ -1,9 +1,14 @@
 import { Link } from 'react-router-dom';
 import { HHero, btnspan, staking } from '../../../assets';
+import 'swiper/css';
+import 'swiper/css/free-mode';
+import 'swiper/css/pagination';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { FreeMode, Pagination, Autoplay } from 'swiper/modules';
 
 const Hero = () => {
   return (
-    <div className=''>
+    <div className='pt-16'>
       <div className='flex justify-between w-full items-center px-5 md:px-20'>
         <div className='lg:w-[50%] lg:p-0 py-16'>
           {' '}
@@ -18,7 +23,7 @@ const Hero = () => {
             </span>{' '}
           </h2>
         </div>
-        <div className='hidden lg:block'>
+        <div className='hidden z-0 lg:block'>
           <img
             src={HHero}
             className=''
@@ -28,7 +33,7 @@ const Hero = () => {
         </div>
       </div>
       <div className='px-5 md:px-20 py-10 mb-10 md:mb-40 flex md:flex-row md:gap-0 gap-10 flex-col justify-between'>
-        <div className='md:w-[50%]'>
+        <div className='md:w-[60%] lg:w-[50%]'>
           <p
             className='md:text-4xl text-2xl text-slate-300 font-[300]'
             data-aos='fade-up'
@@ -38,9 +43,9 @@ const Hero = () => {
             exchange models for value
           </p>
         </div>
-        <div className='flex flex-col md:w-[40%] gap-5  text-2xl'>
+        <div className='flex flex-col items-end md:w-[50%] lg:w-[40%] gap-5  text-2xl'>
           <button
-            className='bg-hbtn py-3 text-center rounded-[20px] text-white relative'
+            className='bg-hbtn py-3 shadow-btns text-center w-full md:w-[70%] rounded-[20px] text-white relative'
             data-aos='fade-up'
             data-aos-duration='1000'
           >
@@ -52,7 +57,7 @@ const Hero = () => {
             </Link>
           </button>{' '}
           <button
-            className='bg-hbtn py-3 rounded-[20px] text-white'
+            className='bg-hbtn py-3 shadow-btns md:w-[70%] w-full rounded-[20px] text-white'
             data-aos='fade-up'
             data-aos-duration='1000'
           >
@@ -64,22 +69,49 @@ const Hero = () => {
         {' '}
         <div className='flex flex-col md:w-[40%] gap-5  text-2xl'>
           <button
-            className='bg-hbtn2 py-3 text-center rounded-[20px] text-white relative'
+            className='bg-hbtn2 shadow-btns py-3 text-center md:w-[70%] rounded-[20px] text-white relative'
             data-aos='fade-up'
             data-aos-duration='1000'
           >
             <Link>Token purchase</Link>
           </button>{' '}
           <button
-            className='bg-hbtn2 py-3 rounded-[20px] text-white'
+            className='bg-hbtn2 py-3  shadow-btns md:w-[70%] rounded-[20px] text-white'
             data-aos='fade-up'
             data-aos-duration='1000'
           >
             Token staking
           </button>
         </div>
-        <div>
-          <img src={staking} className='w-full' />
+        <div className='md:w-[45%]' data-aos='zoom-in' data-aos-duration='1000'>
+          <Swiper
+            spaceBetween={5}
+            slidesPerView={1}
+            autoplay={{
+              delay: 2500,
+              disableOnInteraction: false,
+            }}
+            modules={[Autoplay, Pagination, FreeMode]}
+            freeMode={true}
+            className='xl:h-[360px] lg:h-[290px]'
+            pagination={{
+              clickable: true,
+            }}
+          >
+            <SwiperSlide>
+              <img src={staking} className='w-full' />
+            </SwiperSlide>
+            <SwiperSlide>
+              <img src={staking} className='w-full' />
+            </SwiperSlide>
+            <SwiperSlide>
+              <img src={staking} className='w-full' />
+            </SwiperSlide>
+            <SwiperSlide>
+              <img src={staking} className='w-full' />
+            </SwiperSlide>
+            ...
+          </Swiper>
         </div>
       </div>
     </div>

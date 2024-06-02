@@ -1,12 +1,13 @@
 import Hero from './components/Hero';
+import Vision from './components/Vision';
 
 const Home = () => {
   return (
     <div>
       <div>
         <Hero />
+        <Vision />
       </div>
-      <div className='px-12'></div>
     </div>
   );
 };
