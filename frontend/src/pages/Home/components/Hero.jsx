@@ -45,7 +45,7 @@ const Hero = () => {
         </div>
         <div className='flex flex-col items-end md:w-[50%] lg:w-[40%] gap-5  text-2xl'>
           <button
-            className='bg-hbtn py-3 shadow-btns text-center w-full md:w-[70%] rounded-[20px] text-white relative'
+            className='bg-hbtn hover:ring-2 py-3 shadow-btns text-center w-full md:w-[70%] rounded-[20px] text-white relative'
             data-aos='fade-up'
             data-aos-duration='1000'
           >
@@ -57,7 +57,7 @@ const Hero = () => {
             </Link>
           </button>{' '}
           <button
-            className='bg-hbtn py-3 shadow-btns md:w-[70%] w-full rounded-[20px] text-white'
+            className='bg-hbtn hover:ring-2 py-3 shadow-btns md:w-[70%] w-full rounded-[20px] text-white'
             data-aos='fade-up'
             data-aos-duration='1000'
           >
@@ -69,14 +69,14 @@ const Hero = () => {
         {' '}
         <div className='flex flex-col md:w-[40%] gap-5  text-2xl'>
           <button
-            className='bg-hbtn2 shadow-btns py-3 text-center md:w-[70%] rounded-[20px] text-white relative'
+            className='bg-hbtn2 hover:ring-2 shadow-btns py-3 text-center md:w-[70%] rounded-[20px] text-white relative'
             data-aos='fade-up'
             data-aos-duration='1000'
           >
             <Link>Token purchase</Link>
           </button>{' '}
           <button
-            className='bg-hbtn2 py-3  shadow-btns md:w-[70%] rounded-[20px] text-white'
+            className='bg-hbtn2 hover:ring-2 py-3  shadow-btns md:w-[70%] rounded-[20px] text-white'
             data-aos='fade-up'
             data-aos-duration='1000'
           >

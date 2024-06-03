@@ -19,21 +19,40 @@ const Navbar = () => {
     switch (item) {
       case 'Publish':
         return (
-          <ul className='list-none flex flex-col gap-2'>
-            <li className='border-b border-slate-500 pb-1'>Publish</li>
-            <li className='border-b border-slate-500 pb-2'>How to Release</li>
+          <ul className='list-none flex flex-col'>
+            {' '}
+            <Link to='/publish' className='hover:bg-white hover:text-blue-950'>
+              <li className='border-b border-slate-500 pb-2 pt-1'>Publish</li>
+            </Link>
+            <li className='border-b border-slate-500 pb-2 pt-1'>
+              How to Release
+            </li>
             <li>Auditing Body</li>
           </ul>
         );
       case 'Token':
         return (
-          <ul className='list-none flex flex-col gap-2'>
-            <li className='border-b border-slate-500 pb-1'>Token purchase</li>
-            <li className='border-b border-slate-500 pb-2'>Token staking</li>
-            <li className='border-b border-slate-500 pb-2'>
+          <ul className='list-none flex flex-col '>
+            <Link
+              to='/token-purchase'
+              className='hover:bg-white hover:text-blue-950'
+            >
+              <li className='border-b border-slate-500 pb-2 pt-1'>
+                Token purchase
+              </li>
+            </Link>
+            <Link
+              to='/token-staking'
+              className='hover:bg-white hover:text-blue-950'
+            >
+              <li className='border-b border-slate-500 pt-1 pb-2'>
+                Token staking
+              </li>
+            </Link>
+            <li className='border-b border-slate-500 pt-1 pb-2'>
               Unlock allocation chart
             </li>
-            <li>Functions</li>
+            <li className='pt-1'>Functions</li>
           </ul>
         );
       case 'Help':
@@ -50,7 +69,7 @@ const Navbar = () => {
   };
 
   return (
-    <div className='bg-[#002B5E] top-0 z-50 fixed  w-full pr-16'>
+    <div className='bg-[#002B5E] top-0 z-50 shadow-btns fixed  w-full pr-5 md:pr-16'>
       <div className='flex justify-between items-center'>
         <Link to='/'>
           <div className='flex items-center gap-4'>
@@ -60,26 +79,26 @@ const Navbar = () => {
         </Link>
         <ul className='text-white font-[500] text-xl list-none hidden md:flex justify-around w-[40%]'>
           {['Publish', 'Token', 'Dataset', 'Help'].map((item, index) => (
-            <li
-              key={index}
-              onMouseEnter={() => handleMouseEnter(index)}
-              onMouseLeave={handleMouseLeave}
-              className='relative'
-            >
-              {item === 'Dataset' ? (
-                <Link to={`/${item.toLowerCase()}`}>{item}</Link>
-              ) : (
-                <span className='cursor-pointer'>{item}</span>
-              )}
-              {dropdown === index && item !== 'Dataset' && (
-                <div
-                  className='absolute font-normal text-lg top-full mt-2 w-[250px] rounded-b-lg -left-24 bg-[#002B5E] text-slate-300 text-center p-4 shadow-2xl'
-                  onMouseEnter={() => handleMouseEnter(index)}
-                  onMouseLeave={handleMouseLeave}
-                >
-                  {renderDropdownContent(item)}
-                </div>
-              )}
+            <li key={index} className='relative'>
+              <div
+                onMouseEnter={() => handleMouseEnter(index)}
+                onMouseLeave={handleMouseLeave}
+              >
+                {item === 'Dataset' ? (
+                  <Link to={`/${item.toLowerCase()}`}>{item}</Link>
+                ) : (
+                  <span className='cursor-pointer'>{item}</span>
+                )}
+                {dropdown === index && item !== 'Dataset' && (
+                  <div
+                    className='absolute font-normal text-lg top-5 mt-2 w-[250px] rounded-b-lg -left-24 bg-[#002B5E] text-slate-300 text-center py-4 shadow-2xl'
+                    onMouseEnter={() => handleMouseEnter(index)}
+                    onMouseLeave={handleMouseLeave}
+                  >
+                    {renderDropdownContent(item)}
+                  </div>
+                )}
+              </div>
             </li>
           ))}
         </ul>

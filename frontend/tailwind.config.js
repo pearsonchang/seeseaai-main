@@ -8,6 +8,12 @@ export default {
         hbtn2: 'linear-gradient(90deg, #400AB1 0%, #4349D6 103.79%)',
         cards1:
           'linear-gradient(102.72deg, rgba(239, 192, 255, 0.1) 0%, rgba(79, 11, 103, 0.1) 102.5%)',
+        dataset: ' linear-gradient(90deg, #FFE455 0%, #E79980 100%)',
+        cta: 'linear-gradient(90deg, #FFD25D 0%, #FF6F1E 100%)',
+      },
+      background: {
+        cards11:
+          'linear-gradient(102.72deg, rgba(239, 192, 255, 0.1) 0%, rgba(79, 11, 103, 0.1) 102.5%)',
       },
       boxShadow: {
         btns: '10px 8px 10.4px 0px #00000040',

@@ -8,6 +8,7 @@ import security from './security.png';
 import license from './license.png';
 import novel from './novel.png';
 import prospect from './prospect.png';
+import star from './star.png';
 
 export {
   Logo,
@@ -20,4 +21,5 @@ export {
   license,
   novel,
   prospect,
+  star,
 };

@@ -4,8 +4,8 @@ const Icons = ({ icon, className, width, fill, rotate, hFlip, vFlip }) => {
   return (
     <>
       <Icon
-        data-aos='zoom-in'
-        data-aos-duration='1000'
+        // data-aos='zoom-in'
+        // data-aos-duration='1000'
         width={width}
         rotate={rotate}
         flip={hFlip}
