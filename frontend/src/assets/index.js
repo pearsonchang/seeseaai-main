@@ -9,6 +9,11 @@ import license from './license.png';
 import novel from './novel.png';
 import prospect from './prospect.png';
 import star from './star.png';
+import usd from './usd.png';
+import bnb from './bnb.png';
+import bnb2 from './bnb2.png';
+import merc from './mercuryo.png';
+import reload from './reload.png';
 
 export {
   Logo,
@@ -22,4 +27,9 @@ export {
   novel,
   prospect,
   star,
+  usd,
+  bnb,
+  bnb2,
+  merc,
+  reload,
 };
