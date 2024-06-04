@@ -21,7 +21,13 @@ const Navbar = () => {
         return (
           <ul className='list-none flex flex-col'>
             {' '}
-            <Link to='/publish' className='hover:bg-white hover:text-blue-950'>
+            <Link
+              to='/publish'
+              onClick={() => {
+                window.scrollTo(0, 0);
+              }}
+              className='hover:bg-white hover:text-blue-950'
+            >
               <li className='border-b border-slate-500 pb-2 pt-1'>Publish</li>
             </Link>
             <li className='border-b border-slate-500 pb-2 pt-1'>
@@ -35,6 +41,9 @@ const Navbar = () => {
           <ul className='list-none flex flex-col '>
             <Link
               to='/token-purchase'
+              onClick={() => {
+                window.scrollTo(0, 0);
+              }}
               className='hover:bg-white hover:text-blue-950'
             >
               <li className='border-b border-slate-500 pb-2 pt-1'>
@@ -43,6 +52,9 @@ const Navbar = () => {
             </Link>
             <Link
               to='/token-staking'
+              onClick={() => {
+                window.scrollTo(0, 0);
+              }}
               className='hover:bg-white hover:text-blue-950'
             >
               <li className='border-b border-slate-500 pt-1 pb-2'>

@@ -14,6 +14,9 @@ import bnb from './bnb.png';
 import bnb2 from './bnb2.png';
 import merc from './mercuryo.png';
 import reload from './reload.png';
+import wbnb from './wbnb.png';
+import gcal from './gcal.png';
+import close from './close.png';
 
 export {
   Logo,
@@ -32,4 +35,7 @@ export {
   bnb2,
   merc,
   reload,
+  wbnb,
+  gcal,
+  close,
 };
