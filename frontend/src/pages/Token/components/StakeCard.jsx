@@ -2,10 +2,12 @@ import { useState } from 'react';
 import { btnspan, gcal, wbnb } from '../../../assets';
 import Icons from '../../../components/Icon/Icon';
 import WalletModal from '../../../components/modal/WalletModal';
+import StakeModal from '../../../components/modal/StakeModal';
 
 const StakeCard = () => {
   const [selectedPurpose, setSelectedPurpose] = useState('30d');
   const [modalOpen, setModalOpen] = useState(false);
+  const [modalOpen2, setModalOpen2] = useState(false);
 
   const handleSelect = (purpose) => {
     setSelectedPurpose(purpose);
@@ -17,6 +19,13 @@ const StakeCard = () => {
 
   const closeWalletModal = () => {
     setModalOpen(false);
+  };
+  const handleStakeModalClick = () => {
+    setModalOpen2(!modalOpen2);
+  };
+
+  const closeStakeModal = () => {
+    setModalOpen2(false);
   };
 
   return (
@@ -62,7 +71,11 @@ const StakeCard = () => {
             </button>
           </div>
           <div className='flex items-center gap-2'>
-            <img src={gcal} className='w-5 h-5' />
+            <img
+              src={gcal}
+              className='w-5 h-5'
+              onClick={handleStakeModalClick}
+            />
             <p className='text-[12px] text-slate-300'>APR: 0.11%~0.19%</p>
           </div>
         </div>
@@ -74,7 +87,7 @@ const StakeCard = () => {
         <div className='w-[25%] flex flex-col justify-center items-center'>
           {' '}
           <button
-            className='bg-hbtn w-full hover:ring-2 py-2 shadow-btns z-0 text-center px-14 pl-5 font-bold md:text-lg rounded-[20px] text-white relative'
+            className='bg-hbtn w-full hover:ring-2 py-2 shadow-btns  text-center px-14 pl-5 font-bold md:text-lg rounded-[20px] text-white '
             //   data-aos='zoom-in'
             onClick={handleWalletModalClick}
             //   data-aos-duration='1000'
@@ -99,6 +112,7 @@ const StakeCard = () => {
         </div>
       </div>
       {modalOpen && <WalletModal onclose={closeWalletModal} />}
+      {modalOpen2 && <StakeModal onclose={closeStakeModal} />}
     </div>
   );
 };

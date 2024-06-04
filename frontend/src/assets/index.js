@@ -17,6 +17,9 @@ import reload from './reload.png';
 import wbnb from './wbnb.png';
 import gcal from './gcal.png';
 import close from './close.png';
+import metamask from './metamask.png';
+import bluebinance from './bluebinance.png';
+import offbinance from './offbinance.png';
 
 export {
   Logo,
@@ -38,4 +41,7 @@ export {
   wbnb,
   gcal,
   close,
+  metamask,
+  bluebinance,
+  offbinance,
 };
