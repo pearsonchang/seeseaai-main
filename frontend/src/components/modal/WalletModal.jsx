@@ -5,7 +5,7 @@ import { close } from '../../assets';
 const WalletModal = ({ onclose }) => {
   return (
     <div className='fixed backdrop-filter backdrop-blur-md h-full w-full flex items-center justify-center z-[999px] top-0 left-0'>
-      <div className='bg-transparent text-white border border-slate-300 rounded-lg p-5 w-1/2'>
+      <div className='bg-transparent text-white border border-slate-300 rounded-lg p-5 w-full md:w-1/2'>
         <div className='flex justify-between items-center mb-4'>
           <h5 className='font-bold text-xl'>Connect wallet</h5>
           <img src={close} onClick={onclose} className=' cursor-pointer w-8' />
