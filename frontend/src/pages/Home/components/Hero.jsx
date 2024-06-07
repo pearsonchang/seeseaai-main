@@ -49,7 +49,12 @@ const Hero = () => {
             data-aos='fade-up'
             data-aos-duration='1000'
           >
-            <Link>
+            <Link
+              to='/publish'
+              onClick={() => {
+                window.scrollTo(0, 0);
+              }}
+            >
               Publish{' '}
               <span className='absolute right-4 top-2'>
                 <img src={btnspan} className='w-10 h-10' />
@@ -73,14 +78,28 @@ const Hero = () => {
             data-aos='fade-up'
             data-aos-duration='1000'
           >
-            <Link>Token purchase</Link>
+            <Link
+              to='/token-purchase'
+              onClick={() => {
+                window.scrollTo(0, 0);
+              }}
+            >
+              Token purchase
+            </Link>
           </button>{' '}
           <button
             className='bg-hbtn2 hover:ring-2 py-3  shadow-btns md:w-[70%] rounded-[20px] text-white'
             data-aos='fade-up'
             data-aos-duration='1000'
           >
-            Token staking
+            <Link
+              to='/token-staking'
+              onClick={() => {
+                window.scrollTo(0, 0);
+              }}
+            >
+              Token staking
+            </Link>
           </button>
         </div>
         <div className='md:w-[45%]' data-aos='zoom-in' data-aos-duration='1000'>

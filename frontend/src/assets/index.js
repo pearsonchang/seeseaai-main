@@ -20,6 +20,12 @@ import close from './close.png';
 import metamask from './metamask.png';
 import bluebinance from './bluebinance.png';
 import offbinance from './offbinance.png';
+import publish from './publish.png';
+import publish_bg from './publish_bg.png';
+import audit from './audit.png';
+import comp from './comp.png';
+import ssai from './ssai.png';
+import help from './help.png';
 
 export {
   Logo,
@@ -44,4 +50,10 @@ export {
   metamask,
   bluebinance,
   offbinance,
+  publish,
+  publish_bg,
+  audit,
+  comp,
+  ssai,
+  help,
 };

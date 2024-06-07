@@ -2,10 +2,20 @@ import { Link } from 'react-router-dom';
 import { btnspan, merc, bnb, bnb2, reload, usd } from '../../../assets';
 import Icons from '../../../components/Icon/Icon';
 import { useState } from 'react';
+import WalletModal from '../../../components/modal/WalletModal';
 
 const TPHero = () => {
   const [val, setVal] = useState(150);
   const [val2, setVal2] = useState(0.23452);
+  const [modalOpen, setModalOpen] = useState(false);
+
+  const handleWalletModalClick = () => {
+    setModalOpen(!modalOpen);
+  };
+
+  const closeWalletModal = () => {
+    setModalOpen(false);
+  };
 
   return (
     <div className='pt-36'>
@@ -144,6 +154,7 @@ const TPHero = () => {
               className='bg-hbtn hover:ring-2 py-3 mb-5 shadow-btns text-center px-20 pl-9 font-bold md:text-xl rounded-[20px] text-white relative'
               data-aos='fade-up'
               data-aos-duration='1000'
+              onClick={handleWalletModalClick}
             >
               <Link>
                 Connect wallet
@@ -161,6 +172,7 @@ const TPHero = () => {
               src={reload}
               className='absolute right-8 cursor-pointer sm:block hidden -top-2 w-10'
             />
+            {modalOpen && <WalletModal onclose={closeWalletModal} />}
           </div>
         </div>
       </div>

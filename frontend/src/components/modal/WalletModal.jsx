@@ -1,6 +1,12 @@
 /* eslint-disable react/prop-types */
 
-import { bluebinance, close, metamask, offbinance } from '../../assets';
+import {
+  bluebinance,
+  btnspan,
+  close,
+  metamask,
+  offbinance,
+} from '../../assets';
 
 const WalletModal = ({ onclose }) => {
   const handleModalOverlayClick = (e) => {
@@ -61,7 +67,15 @@ const WalletModal = ({ onclose }) => {
         <p className='text-slate-300 font-[300]  '>
           A Web3 Wallet allows you to send and receive crypto assets like
           bitcoin, BNB,ETH,NFTs and much more.
-        </p>
+        </p>{' '}
+        <div className='flex justify-center items-center'>
+          <button className='bg-hbtn mt-8 hover:ring-2 py-3 mb-5 shadow-btns text-center px-20 pl-9 font-bold md:text-xl rounded-[20px] text-white relative'>
+            Learn How to Connect
+            <span className='absolute right-4 top-2'>
+              <img src={btnspan} className='md:w-10 md:h-10 w-8 h-8' />
+            </span>
+          </button>{' '}
+        </div>
       </div>
     </div>
   );

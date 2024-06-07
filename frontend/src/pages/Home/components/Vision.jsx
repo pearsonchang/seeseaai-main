@@ -12,7 +12,7 @@ const Vision = () => {
 
   return (
     <div className='py-16 pt-36'>
-      <div className='   px-5 md:px-20'>
+      <div className='px-5 md:px-20'>
         <p
           className='md:text-3xl  text-2xl text-slate-300 font-[300] text-center lg:text-right '
           data-aos='fade-up'
@@ -25,7 +25,7 @@ const Vision = () => {
           decentralized ecosystem
         </p>
       </div>
-      <div className='px-5 grid md:grid-cols-2 h-[1400px] md:h-[800px] lg:h-[400px] lg:grid-cols-4 xl:gap-10 gap-5 md:gap-10 my-20'>
+      <div className='px-5 grid md:grid-cols-2 h-[1650px] md:h-[800px] lg:h-[400px] lg:grid-cols-4 xl:gap-10 gap-5 md:gap-10 my-20'>
         {vision_data.map((item, index) => (
           <div
             key={index}
@@ -36,9 +36,9 @@ const Vision = () => {
           >
             <div className='card'>
               <div
-                className='card-front bg-cards1 shadow-cards1 items-center flex flex-col rounded-[17px] p-8 px-5  '
-                data-aos='fade-up'
-                data-aos-duration={index % 2 === 0 ? '1000' : '1500'}
+                className='card-front bg-cards1 shadow-cards1 items-center flex flex-col rounded-[17px] h-[380px] p-8 px-5  '
+                // data-aos='fade-up'
+                // data-aos-duration={index % 2 === 0 ? '1000' : '1500'}
               >
                 <img src={item.imgSrc} className='w-60 h-60' alt={item.text} />
                 <p className='text-[#B9BBC3] font-bold text-3xl text-center'>
@@ -57,7 +57,7 @@ const Vision = () => {
           </div>
         ))}
       </div>
-      <div className='relative mt-36 px-5 md:px-20'>
+      <div className='relative mt-96 md:mt-36 px-5 md:px-20'>
         <img
           src={prospect}
           className='w-[1000px]'

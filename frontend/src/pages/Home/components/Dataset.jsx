@@ -30,15 +30,13 @@ const Dataset = () => {
               data-aos-duration='1500'
               className='flex mb-3 p-4 bg-[#FFFFFF1A] justify-between items-center'
             >
-              <p className=' md:text-3xl  text-2xl text-[#FFD25D]'>
-                {dat.name}
-              </p>
-              <div className='flex  gap-10 items-center'>
-                <p className=' md:text-3xl  text-2xl text-white'>{dat.star}</p>
-                <p className='bg-[#4340D1] rounded-full p-1 px-6 text-white'>
+              <p className=' md:text-3xl  text-sm text-[#FFD25D]'>{dat.name}</p>
+              <div className='flex gap-4 md:gap-10 items-center'>
+                <p className=' md:text-3xl  text-sm text-white'>{dat.star}</p>
+                <p className='bg-[#4340D1] rounded-full md:p-1 md:px-6 px-4 md:text-lg text-sm text-white'>
                   {dat.value}
                 </p>
-                <img src={dat.icon} />
+                <img src={dat.icon} className='md:w-full w-6' />
               </div>
             </div>
           ))}

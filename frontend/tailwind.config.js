@@ -10,6 +10,8 @@ export default {
           'linear-gradient(102.72deg, rgba(239, 192, 255, 0.1) 0%, rgba(79, 11, 103, 0.1) 102.5%)',
         dataset: ' linear-gradient(90deg, #FFE455 0%, #E79980 100%)',
         cta: 'linear-gradient(90deg, #FFD25D 0%, #FF6F1E 100%)',
+        phero: ' linear-gradient(89.84deg, #BFB5FF 0.08%, #6BB3F5 90.15%)',
+        pbtn: ' linear-gradient(90deg, #400AB1 0%, #4349D6 103.79%)',
       },
       background: {
         cards11:
