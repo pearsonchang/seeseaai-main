@@ -6,6 +6,7 @@ import styles from './navbar.module.css';
 
 const Navbar = () => {
   const [dropdown, setDropdown] = useState(null);
+  const [dropdown2, setDropdown2] = useState(null);
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolling, setScrolling] = useState(false);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 900);
@@ -38,8 +39,18 @@ const Navbar = () => {
     }
   };
 
+  const handleMouseEnter2 = () => {
+    if (!isMobile) {
+      setDropdown2(true);
+    }
+  };
+
   const handleMouseLeave = () => {
     setDropdown(null);
+  };
+
+  const handleMouseLeave2 = () => {
+    setDropdown2(null);
   };
 
   const toggleMobileMenu = () => {
@@ -105,10 +116,18 @@ const Navbar = () => {
               <li className='border-b border-slate-500 pt-1 pb-2'>
                 Token staking
               </li>
+            </Link>{' '}
+            <Link
+              to='/unlock-allocation'
+              onClick={() => {
+                window.scrollTo(0, 0);
+              }}
+              className='hover:bg-white hover:text-blue-950'
+            >
+              <li className='border-b border-slate-500 pt-1 pb-2'>
+                Unlock allocation chart
+              </li>
             </Link>
-            <li className='border-b border-slate-500 pt-1 pb-2'>
-              Unlock allocation chart
-            </li>
             <li className='pt-1'>Functions</li>
           </ul>
         );
@@ -193,7 +212,49 @@ const Navbar = () => {
             </li>
           ))}
         </ul>
-        <img src={User} alt='User' className='' />
+        <div className='relative'>
+          <img
+            src={User}
+            alt='User'
+            className=''
+            onMouseEnter={() => handleMouseEnter2()}
+            onMouseLeave={handleMouseLeave2}
+          />{' '}
+          {dropdown2 && (
+            <div
+              className='absolute font-normal text-lg top-5 mt-5 w-[200px] rounded-b-lg right-0 bg-[#002B5E] text-slate-300 text-center py-4 pb-0 shadow-2xl'
+              onMouseEnter={() => handleMouseEnter2()}
+              onMouseLeave={handleMouseLeave2}
+            >
+              <ul className='list-none flex flex-col'>
+                {' '}
+                {/* <Link
+                  to='/publish'
+                  onClick={() => {
+                    window.scrollTo(0, 0);
+                  }}
+                  className='hover:bg-white hover:text-blue-950'
+                > */}
+                <li className='border-b border-slate-500 pb-2 pt-1'>
+                  No KYC login
+                </li>
+                {/* </Link> */}
+                <li className='border-b border-slate-500 pb-2 pt-1'>
+                  Security and Privacy
+                </li>{' '}
+                <Link
+                  to='/my-releases'
+                  onClick={() => {
+                    window.scrollTo(0, 0);
+                  }}
+                  className='hover:bg-white hover:text-blue-950'
+                >
+                  <li className='  pt-2 pb-2 '>My releases</li>
+                </Link>{' '}
+              </ul>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );

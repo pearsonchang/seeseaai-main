@@ -10,7 +10,7 @@ const Hero = () => {
         }}
       >
         <div className='pl-5 md:pl-20 h-full'>
-          <div className='flex md:justify-between justify-center gap-8 overflow-hidden items-center h-full'>
+          <div className='flex justify-center gap-8 md:gap-0 overflow-hidden items-center h-full'>
             <div>
               <h2
                 className='bg-phero text-5xl md:text-4xl lg:text-7xl md:text-right text-center font-bold bg-clip-text text-transparent'
@@ -27,7 +27,12 @@ const Hero = () => {
                 Your Ultimate Data Destination!
               </p>
             </div>
-            <img src={publish} className='-mr-28 hidden md:block  opacity-80' />
+            <img
+              src={publish}
+              className='-mr-48 hidden md:block    opacity-80'
+              data-aos='zoom-in'
+              data-aos-duration='1000'
+            />
           </div>
         </div>
       </div>

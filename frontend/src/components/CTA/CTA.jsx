@@ -20,7 +20,13 @@ const Cta = () => {
         <Link className='md:w-1/2 w-full hover:bg-white hover:text-blue-950  text-center border p-3 px-20 font-semibold text-xl text-white border-slate-400 rounded-xl'>
           <p>User Guide</p>
         </Link>
-        <Link className='md:w-1/2 w-full hover:bg-white hover:text-blue-950  text-center border p-3 px-20 font-semibold text-xl text-white border-slate-400 rounded-xl'>
+        <Link
+          className='md:w-1/2 w-full hover:bg-white hover:text-blue-950  text-center border p-3 px-20 font-semibold text-xl text-white border-slate-400 rounded-xl'
+          to='/help-center'
+          onClick={() => {
+            window.scrollTo(0, 0);
+          }}
+        >
           <p>Help Center</p>
         </Link>
       </div>
