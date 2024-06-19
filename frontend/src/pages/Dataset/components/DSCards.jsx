@@ -4,10 +4,14 @@ import Icons from '../../../components/Icon/Icon';
 const DSCards = () => {
   return (
     <div className='px-5 md:px-20 mb-6 '>
-      <div className='bg-[#FFFFFF1A] flex items-start gap-5 p-5'>
+      <div
+        className='bg-[#FFFFFF1A] flex items-start flex-col md:flex-row gap-5 p-5'
+        data-aos='zoom-in'
+        data-aos-duration='1500'
+      >
         <img src={dscard} className='rounded-xl' />
         <div className='w-full text-slate-300'>
-          <div className='flex justify-between items-center mb-3'>
+          <div className='flex flex-col lg:flex-row justify-between lg:items-center mb-3'>
             <p className='text-slate-300 flex items-center gap-2 font-[300]'>
               <span className='text-[#FFD25D] text-2xl font-normal'>
                 Code name{' '}
@@ -17,7 +21,7 @@ const DSCards = () => {
                 Python
               </span>
             </p>
-            <div className='flex gap-4 items-center'>
+            <div className='flex gap-4 flex-col md:flex-row md:items-center md:mt-0 mt-3'>
               <div className='rounded-2xl gap-3 flex items-center justify-center border border-white text-center text-white py-1 px-5'>
                 <Icons icon='mdi:user-multiple' className='w-6 h-6' />
                 Sponsor
@@ -37,7 +41,7 @@ const DSCards = () => {
             Data description Label Studio is a multi-type data labeling and
             annotation tool with standardized output format
           </p>
-          <div className='grid gap-4 grid-cols-5 bg-[#010E35] p-3 rounded-lg'>
+          <div className='grid gap-4 sm:grid-cols-2 md:grid-cols-5 bg-[#010E35] p-3 rounded-lg'>
             <p className='bg-[#0176CC] text-white text-center rounded-full p-2'>
               Keyword
             </p>
