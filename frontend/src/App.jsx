@@ -8,6 +8,7 @@ import Publish from './pages/Publish/Publish';
 import HelpCenter from './pages/Help/HelpCenter';
 import Allocation from './pages/Allocation/Allocation';
 import Realese from './pages/Release/Realese';
+import Dataset from './pages/Dataset/Dataset';
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
         <Route path='/help-center' element={<HelpCenter />} />
         <Route path='/unlock-allocation' element={<Allocation />} />
         <Route path='/my-releases' element={<Realese />} />
+        <Route path='/dataset' element={<Dataset />} />
       </Routes>
       <Footer />
     </>

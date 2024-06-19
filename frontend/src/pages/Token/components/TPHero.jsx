@@ -1,21 +1,11 @@
-import { Link } from 'react-router-dom';
-import { btnspan, merc, bnb, bnb2, reload, usd } from '../../../assets';
+import { merc, bnb, bnb2, reload, usd } from '../../../assets';
 import Icons from '../../../components/Icon/Icon';
 import { useState } from 'react';
-import WalletModal from '../../../components/modal/WalletModal';
+import ConnectWallet from '../../../components/Button/ConnectWallet';
 
 const TPHero = () => {
   const [val, setVal] = useState(150);
   const [val2, setVal2] = useState(0.23452);
-  const [modalOpen, setModalOpen] = useState(false);
-
-  const handleWalletModalClick = () => {
-    setModalOpen(!modalOpen);
-  };
-
-  const closeWalletModal = () => {
-    setModalOpen(false);
-  };
 
   return (
     <div className='pt-36'>
@@ -150,29 +140,22 @@ const TPHero = () => {
             </div>
           </div>
           <div className='flex justify-center items-center'>
-            <button
+            <ConnectWallet
               className='bg-hbtn hover:ring-2 py-3 mb-5 shadow-btns text-center px-20 pl-9 font-bold md:text-xl rounded-[20px] text-white relative'
-              data-aos='fade-up'
-              data-aos-duration='1000'
-              onClick={handleWalletModalClick}
-            >
-              <Link>
-                Connect wallet
-                <span className='absolute right-4 top-2'>
-                  <img src={btnspan} className='md:w-10 md:h-10 w-8 h-8' />
-                </span>
-              </Link>
-            </button>{' '}
+              imgClassName='md:w-10 md:h-10 w-8 h-8'
+            />
           </div>
-          <div className='relative' data-aos='fade-up' data-aos-duration='1200'>
+          <div className=' ' data-aos='fade-up' data-aos-duration='1200'>
             <p className='text-slate-300 font-[300] text-xl text-center'>
               By continuing you agree to our terms of service
             </p>
-            <img
-              src={reload}
-              className='absolute right-8 cursor-pointer sm:block hidden -top-2 w-10'
-            />
-            {modalOpen && <WalletModal onclose={closeWalletModal} />}
+            <div className='flex items-center justify-end'>
+              <img
+                src={reload}
+                className='text-right cursor-pointer sm:block hidden -mt-8 w-10'
+              />
+            </div>
+            {/* {modalOpen && <WalletModal onclose={closeWalletModal} />} */}
           </div>
         </div>
       </div>

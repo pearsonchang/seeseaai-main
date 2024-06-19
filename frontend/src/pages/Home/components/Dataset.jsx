@@ -48,7 +48,7 @@ const Dataset = () => {
           // data-aos='fade-up'
           // data-aos-duration='1000'
         >
-          <Link>Find more</Link>
+          <Link to='/dataset'>Find more</Link>
         </button>{' '}
       </div>
     </div>

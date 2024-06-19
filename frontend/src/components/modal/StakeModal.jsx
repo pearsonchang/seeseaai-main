@@ -1,9 +1,9 @@
+/* eslint-disable react/prop-types */
 import { useState } from 'react';
-import { close, wbnb } from '../../assets';
+import { btnspan, close, gcal, wbnb } from '../../assets';
 import './styles.css';
 import Icons from '../Icon/Icon';
 
-/* eslint-disable react/prop-types */
 const StakeModal = ({ onclose }) => {
   const [value, setValue] = useState(0);
   const [selectedPurpose, setSelectedPurpose] = useState('30d');
@@ -26,9 +26,9 @@ const StakeModal = ({ onclose }) => {
       className='fixed backdrop-filter backdrop-blur-md h-full w-full flex items-center justify-center z-[999px] top-0 left-0'
       onClick={handleModalOverlayClick}
     >
-      <div className='bg-transparent max-h-[450px] overflow-auto text-white border border-slate-300 rounded-lg p-5 w-full md:w-1/2'>
+      <div className='bg-transparent md:max-h-[450px] max-h-[600px] overflow-auto text-white border border-slate-300 rounded-lg p-5 w-full md:w-1/2'>
         <div className='flex justify-between items-start mb-4'>
-          <div className='flex flex-col items-center'>
+          <div className='md:flex hidden flex-col items-center'>
             <img src={wbnb} />
             <p className='font-semibold mt-1'>WBNB</p>
             <p className='font-[300]'>Balance:0</p>
@@ -44,13 +44,14 @@ const StakeModal = ({ onclose }) => {
           </div>
           <img src={close} onClick={onclose} className=' cursor-pointer w-8' />
         </div>
-        <div className='pl-12 pr-12'>
-          <div className='ml-14 -mt-10'>
+        <div className='md:pl-12 pr-12'>
+          <div className='md:ml-14 md:-mt-10 -mt-3'>
             <p className='font-[300] text-slate-300 text-sm '>
               ~{120 - value}USD
             </p>
             <input
               type='range'
+              value={value}
               min='0'
               max='120'
               onChange={handleChange}
@@ -58,12 +59,32 @@ const StakeModal = ({ onclose }) => {
             />
           </div>
           <div className='grid grid-cols-4 gap-2'>
-            <p className='bg-[#187BCE] text-center rounded-lg py-1'>25%</p>
-            <p className='bg-[#187BCE] text-center rounded-lg py-1'>50%</p>
-            <p className='bg-[#187BCE] text-center rounded-lg py-1'>75%</p>
-            <p className='bg-[#187BCE] text-center rounded-lg py-1'>Max</p>
+            <p
+              className='bg-[#187BCE] text-center rounded-lg py-1 cursor-pointer'
+              onClick={() => setValue((25 / 100) * 120)}
+            >
+              25%
+            </p>
+            <p
+              className='bg-[#187BCE] text-center rounded-lg py-1 cursor-pointer'
+              onClick={() => setValue((50 / 100) * 120)}
+            >
+              50%
+            </p>
+            <p
+              className='bg-[#187BCE] text-center rounded-lg py-1 cursor-pointer'
+              onClick={() => setValue((75 / 100) * 120)}
+            >
+              75%
+            </p>
+            <p
+              className='bg-[#187BCE] text-center rounded-lg py-1 cursor-pointer'
+              onClick={() => setValue((100 / 100) * 120)}
+            >
+              Max
+            </p>
           </div>
-          <div className='flex justify-between mt-5'>
+          <div className='flex justify-between flex-col md:flex-row mt-5'>
             <div className=' w-[55%]'>
               <h5 className='font-bold text-lg'>Stake Periods:</h5>{' '}
               <div className='grid grid-cols-3 gap-3 my-2 '>
@@ -100,7 +121,7 @@ const StakeModal = ({ onclose }) => {
               </div>
               <h5 className='font-bold text-lg mt-9'>POSITION OVERVIEW</h5>{' '}
             </div>
-            <div className='w-[40%] mt-5'>
+            <div className='md:w-[40%] mt-5'>
               <p className='flex gap-2 text-[#B9B9B9] text-[12px] font-[300] '>
                 <span>
                   <Icons icon='ph:info-light' className='text-lg mt-[1px]' />
@@ -114,7 +135,52 @@ const StakeModal = ({ onclose }) => {
               </p>
             </div>
           </div>
-          <div className=' bg-[#010E35] p-3 rounded-lg mt-4 w-2/3'>khbyk</div>
+          <div className=' bg-[#010E35] relative   p-5 pr-14 text-slate-200  rounded-lg my-4 md:w-4/5'>
+            <p className='flex justify-between mb-5'>
+              STAKE AMOUNT <span>0</span>
+            </p>
+            <p className='flex justify-between mb-5'>
+              DURATION <span>30 days</span>
+            </p>
+            <p className='flex justify-between mb-5'>
+              APR <span>1%</span>
+            </p>
+            <p className='flex justify-between mb-5'>
+              LOCKED CAKE BOOST<span>1.1x</span>
+            </p>
+            <p className='flex justify-between mb-5'>
+              STAKE PERIOD ENDS <span>Jun 13, 2024 14:00</span>
+            </p>
+            <p className='flex justify-between '>
+              PROJECTED RETURN{' '}
+              <span className='flex flex-col'>
+                <span>0 WBNB</span>
+                <span className='text-[12px] text-right text-gray-400'>
+                  ~0.0USD
+                </span>
+              </span>
+            </p>{' '}
+            <img src={gcal} className='w-8 h-8 absolute bottom-6 right-5' />
+          </div>
+          <div className='flex justify-between mt-10 items-center'>
+            <button
+              className='bg-hbtn md:w-1/3 hover:ring-2 py-2 shadow-btns relative text-center px-14 pl-5 font-bold md:text-lg rounded-[20px] text-white '
+              //   data-aos='zoom-in'
+              //   data-aos-duration='1000'
+            >
+              Confirm
+              <span className='absolute right-4 top-2'>
+                <img src={btnspan} className='md:w-6 md:h-6 w-8 h-8' />
+              </span>
+            </button>{' '}
+            <button
+              className=' bg-none md:w-1/3 hover:ring-2 py-2  border border-slate-400  text-center px-10   font-bold md:text-lg rounded-[20px] text-white '
+              //   data-aos='zoom-in'
+              //   data-aos-duration='1000'
+            >
+              Get WBNB
+            </button>{' '}
+          </div>
         </div>
       </div>
     </div>

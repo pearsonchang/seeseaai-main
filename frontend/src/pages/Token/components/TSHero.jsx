@@ -1,7 +1,19 @@
-import { ssai } from '../../../assets';
+import { useState } from 'react';
+import { gift, ssai } from '../../../assets';
 import StakeCard from './StakeCard';
+import RewardModal from '../../../components/modal/RewardModal';
 
 const TSHero = () => {
+  const [modalOpen, setModalOpen] = useState(false);
+
+  const handleRewardModalClick = () => {
+    setModalOpen(!modalOpen);
+  };
+
+  const closeRewardModal = () => {
+    setModalOpen(false);
+  };
+
   return (
     <div className='pt-36'>
       <div className='px-5 md:px-20'>
@@ -36,7 +48,7 @@ const TSHero = () => {
           </h2>
           <div className='bg-cards1 md:flex-row flex-col text-white mt-16 rounded-[12px] p-6 flex justify-between '>
             <img src={ssai} className='md:mb-0 mb-10' />
-            <div className='w-[70%] '>
+            <div className='w-[60%] '>
               <h3 className='font-semibold text-3xl mb-7'>Earn SSAI</h3>
               <div className='flex md:flex-row flex-col md:gap-44 gap-10'>
                 <div>
@@ -47,6 +59,20 @@ const TSHero = () => {
                   <li>Monthly revenue sharing</li>
                   <li>Monthly CAKE pool rewards</li>
                 </ul>
+              </div>
+              <div className='flex mt-6 md:-ml-20 justify-center items-center'>
+                <button
+                  className='bg-hbtn md:w-1/3 hover:ring-2 py-2 shadow-btns relative text-center px-14 pl-5 font-bold md:text-lg rounded-[20px] text-white '
+                  //   data-aos='zoom-in'
+                  //   data-aos-duration='1000'
+                  onClick={handleRewardModalClick}
+                >
+                  Check reward
+                  <span className='absolute right-4 top-2'>
+                    <img src={gift} className='md:w-6 md:h-6 w-8 h-8' />
+                  </span>
+                </button>{' '}
+                {modalOpen && <RewardModal onclose={closeRewardModal} />}
               </div>
             </div>
           </div>

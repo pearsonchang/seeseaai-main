@@ -26,6 +26,10 @@ import audit from './audit.png';
 import comp from './comp.png';
 import ssai from './ssai.png';
 import help from './help.png';
+import gift from './gift.png';
+import share from './share.png';
+import reward from './reward.png';
+import dscard from './dscard.png';
 
 export {
   Logo,
@@ -56,4 +60,8 @@ export {
   comp,
   ssai,
   help,
+  gift,
+  share,
+  reward,
+  dscard,
 };

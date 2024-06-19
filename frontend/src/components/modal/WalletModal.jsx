@@ -16,7 +16,7 @@ const WalletModal = ({ onclose }) => {
   };
   return (
     <div
-      className='fixed backdrop-filter backdrop-blur-md h-full w-full flex items-center justify-center z-[999px] top-0 left-0'
+      className='fixed backdrop-filter backdrop-blur-md h-full w-full flex items-center justify-center z-[9999px] top-0 left-0'
       onClick={handleModalOverlayClick}
     >
       <div className='bg-transparent max-h-[450px] overflow-auto text-white border border-slate-300 rounded-lg p-5 w-full md:w-1/2'>

@@ -1,11 +1,10 @@
 import { useState } from 'react';
-import { btnspan, gcal, wbnb } from '../../../assets';
+import { gcal, wbnb } from '../../../assets';
 import Icons from '../../../components/Icon/Icon';
-import WalletModal from '../../../components/modal/WalletModal';
 import StakeModal from '../../../components/modal/StakeModal';
+import ConnectWallet from '../../../components/Button/ConnectWallet';
 
 const StakeCard = () => {
-  const [modalOpen, setModalOpen] = useState(false);
   const [modalOpen2, setModalOpen2] = useState(false);
   const [selectedPurpose, setSelectedPurpose] = useState('30d');
 
@@ -13,13 +12,6 @@ const StakeCard = () => {
     setSelectedPurpose(purpose);
   };
 
-  const handleWalletModalClick = () => {
-    setModalOpen(!modalOpen);
-  };
-
-  const closeWalletModal = () => {
-    setModalOpen(false);
-  };
   const handleStakeModalClick = () => {
     setModalOpen2(!modalOpen2);
   };
@@ -85,20 +77,10 @@ const StakeCard = () => {
           <p className='text-slate-300 font-[200]'>~$720000,00USD</p>
         </div>
         <div className='lg:w-[25%] w-full flex flex-col justify-center lg:items-center'>
-          {' '}
-          <button
+          <ConnectWallet
             className='bg-hbtn w-full hover:ring-2 py-2 shadow-btns  text-center px-14 pl-5 font-bold md:text-lg rounded-[20px] text-white '
-            //   data-aos='zoom-in'
-            onClick={handleWalletModalClick}
-            //   data-aos-duration='1000'
-          >
-            <>
-              Connect wallet
-              <span className='absolute right-4 top-2'>
-                <img src={btnspan} className='md:w-6 md:h-6 w-8 h-8' />
-              </span>
-            </>
-          </button>{' '}
+            imgClassName='md:w-6 md:h-6 w-8 h-8'
+          />
           <p className='flex items-center gap-2 cursor-pointer text-slate-300 mt-3'>
             Details{' '}
             <span>
@@ -111,7 +93,6 @@ const StakeCard = () => {
           </p>
         </div>
       </div>
-      {modalOpen && <WalletModal onclose={closeWalletModal} />}
       {modalOpen2 && <StakeModal onclose={closeStakeModal} />}
     </div>
   );
