@@ -30,6 +30,7 @@ import gift from './gift.png';
 import share from './share.png';
 import reward from './reward.png';
 import dscard from './dscard.png';
+import whitepaper from './SeeSeaAI-Whitre Paper.pdf';
 
 export {
   Logo,
@@ -64,4 +65,5 @@ export {
   share,
   reward,
   dscard,
+  whitepaper,
 };

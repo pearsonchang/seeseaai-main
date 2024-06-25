@@ -1,8 +1,9 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from 'react';
-import { Logo, User } from '../../assets';
+import { Logo, User, whitepaper } from '../../assets';
 import { Link } from 'react-router-dom';
 import styles from './navbar.module.css';
+import ComingSoon from '../modal/ComingSoon';
 
 const Navbar = () => {
   const [dropdown, setDropdown] = useState(null);
@@ -10,6 +11,26 @@ const Navbar = () => {
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolling, setScrolling] = useState(false);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 900);
+  const [modalOpen, setModalOpen] = useState(false);
+
+  const handleComingSoonModalClick = () => {
+    setModalOpen(!modalOpen);
+  };
+
+  const closeComingSoonModal = () => {
+    setModalOpen(false);
+  };
+
+  const handleDownload = () => {
+    // const link = document.createElement('a');
+    // link.href = whitepaper;
+    // link.download = 'SeeSeaAI-WhitePaper.pdf';
+    // document.body.appendChild(link);
+    // link.click();
+    // document.body.removeChild(link);
+
+    window.open(whitepaper, '_blank');
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -84,12 +105,20 @@ const Navbar = () => {
               }}
               className='hover:bg-white hover:text-blue-950'
             >
-              <li className='border-b border-slate-500 pb-2 pt-1'>Publish</li>
+              <li className='  border-b border-slate-500 pb-2 pt-1'>Publish</li>
             </Link>
-            <li className='border-b border-slate-500 pb-2 pt-1'>
+            <li
+              className='hover:bg-white hover:text-blue-950 cursor-pointer   border-b border-slate-500 pb-2 pt-1'
+              onClick={handleComingSoonModalClick}
+            >
               How to Release
             </li>
-            <li>Auditing Body</li>
+            <li
+              className='hover:bg-white hover:text-blue-950 cursor-pointer  pb-2 pt-1'
+              onClick={handleComingSoonModalClick}
+            >
+              Auditing Body
+            </li>
           </ul>
         );
       case 'Token':
@@ -128,12 +157,17 @@ const Navbar = () => {
                 Unlock allocation chart
               </li>
             </Link>
-            <li className='pt-1'>Functions</li>
+            <li
+              className='hover:bg-white hover:text-blue-950 cursor-pointer  pb-2 pt-1'
+              onClick={handleComingSoonModalClick}
+            >
+              Functions
+            </li>
           </ul>
         );
       case 'Help':
         return (
-          <ul className='list-none flex flex-col gap-2'>
+          <ul className='list-none flex flex-col'>
             <Link
               to='/help-center'
               onClick={() => {
@@ -145,8 +179,18 @@ const Navbar = () => {
                 Help center
               </li>
             </Link>
-            <li className='border-b border-slate-500 pb-2'>User guide</li>
-            <li>White paper</li>
+            <li
+              className='hover:bg-white hover:text-blue-950 cursor-pointer   border-b border-slate-500 pb-2 pt-1'
+              onClick={handleComingSoonModalClick}
+            >
+              User guide
+            </li>
+            <li
+              className='hover:bg-white hover:text-blue-950 cursor-pointer  pb-2 pt-1'
+              onClick={handleDownload}
+            >
+              White paper
+            </li>
           </ul>
         );
       default:
@@ -201,7 +245,7 @@ const Navbar = () => {
                 )}
                 {dropdown === index && item !== 'Dataset' && (
                   <div
-                    className='absolute font-normal text-lg top-5 mt-2 w-[250px] rounded-b-lg -left-24 bg-[#002B5E] text-slate-300 text-center py-4 shadow-2xl'
+                    className='absolute font-normal text-lg top-5 mt-2 w-[250px] rounded-b-lg -left-24 bg-[#002B5E] text-slate-300 text-center pt-4 shadow-2xl'
                     onMouseEnter={() => handleMouseEnter(index)}
                     onMouseLeave={handleMouseLeave}
                   >
@@ -212,6 +256,7 @@ const Navbar = () => {
             </li>
           ))}
         </ul>
+        {modalOpen && <ComingSoon onclose={closeComingSoonModal} />}
         <div className='relative'>
           <img
             src={User}
