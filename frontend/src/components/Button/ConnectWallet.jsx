@@ -2,31 +2,27 @@
 import { useState } from 'react';
 import { btnspan } from '../../assets';
 import WalletModal from '../modal/WalletModal';
+import { useWeb3Modal, useWeb3ModalAccount } from '@web3modal/ethers5/react'
+
 
 const ConnectWallet = ({ className, imgClassName }) => {
-  const [modalOpen, setModalOpen] = useState(false);
 
-  const handleWalletModalClick = () => {
-    setModalOpen(!modalOpen);
-  };
+  const { open, close } = useWeb3Modal()
+  const { address, isConnected } = useWeb3ModalAccount()
 
-  const closeWalletModal = () => {
-    setModalOpen(false);
-  };
   return (
     <button
       className={className}
       //   data-aos='zoom-in'
-      onClick={handleWalletModalClick}
+      onClick={() => open()}
       //   data-aos-duration='1000'
     >
       <>
-        Connect wallet
+      {isConnected ? `${address.substring(0, 6)}...${address.substring(address.length - 4)}` : 'Connect Wallet'}
         <span className='absolute right-4 top-2'>
           <img src={btnspan} className={imgClassName} />
         </span>
       </>
-      {modalOpen && <WalletModal onclose={closeWalletModal} />}
     </button>
   );
 };
