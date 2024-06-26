@@ -48,7 +48,7 @@ const TSHero = () => {
           </h2>
           <div className='bg-cards1 md:flex-row flex-col text-white mt-16 rounded-[12px] p-6 flex justify-between '>
             <img src={ssai} className='md:mb-0 mb-10' />
-            <div className='w-[60%] '>
+            <div className='md:w-[60%] '>
               <h3 className='font-semibold text-3xl mb-7'>Earn SSAI</h3>
               <div className='flex md:flex-row flex-col md:gap-44 gap-10'>
                 <div>
@@ -69,7 +69,7 @@ const TSHero = () => {
                 >
                   Check reward
                   <span className='absolute right-4 top-2'>
-                    <img src={gift} className='md:w-6 md:h-6 w-8 h-8' />
+                    <img src={gift} className='md:w-6 md:h-6 w-5 h-5' />
                   </span>
                 </button>{' '}
                 {modalOpen && <RewardModal onclose={closeRewardModal} />}

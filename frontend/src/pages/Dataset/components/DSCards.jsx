@@ -15,11 +15,11 @@ const DSCards = ({ code_name, description, arrays }) => {
           <div className='flex flex-col lg:flex-row justify-between w-full lg:items-center mb-3'>
             <p className='text-slate-300 flex items-center gap-2 font-[300]'>
               <span className='text-[#FFD25D] text-lg font-normal'>
-                Code name{' '}
+                {code_name}
               </span>
               <span className='flex items-center text-sm gap-2'>
                 <div className='w-4 h-4 inline-block bg-[#266DA1] rounded-full'></div>
-                {code_name}
+                Python{' '}
               </span>
             </p>
             <div className='flex gap-4 flex-col  md:flex-row md:items-center md:mt-0 mt-3'>

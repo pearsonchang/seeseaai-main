@@ -1,4 +1,9 @@
-/* .navbar input[type='checkbox'],
+:root {
+  --primary-color: #29293f;
+  --secondary-color: #e60b18;
+}
+
+.navbar input[type='checkbox'],
 .navbar .hamburger-lines {
   display: none;
 }
@@ -59,7 +64,7 @@ a:hover {
   transition: 0.3s ease-in;
 }
 
-@media (max-width: 900px) {
+@media (max-width: 1280px) {
   .container {
     padding: 10px 50px;
   }
@@ -100,12 +105,20 @@ a:hover {
     justify-content: space-between;
     align-items: center;
   }
+
+  .useruser {
+    position: absolute;
+    display: block;
+    top: 10px;
+    right: 80px;
+  }
+
   .navbarContainer .hamburgerLines .line {
     display: block;
-    height: 2px;
+    height: 3px;
     width: 100%;
     border-radius: 10px;
-    background-color: white !important;
+    background-color: #fff !important;
   }
 
   .navbarContainer .hamburgerLines .line1 {
@@ -120,13 +133,10 @@ a:hover {
     transition: transform 0.3s ease-in-out;
   }
 
-  .navbarContainer img {
-    visibility: hidden;
-  }
-
   .navbar .menuItems {
     position: relative;
     left: 30%;
+    /* margin-top: 53px; */
     padding-top: 20px;
     padding-left: 10px;
     background-color: #ffffff;
@@ -137,29 +147,35 @@ a:hover {
     transition: transform 0.5s ease-in-out;
     overflow: hidden;
     width: 80%;
-    justify-content: start;
-    gap: 10px;
   }
 
   .menuItems li {
     padding: 10px;
     background-color: #fff;
     margin: 0;
+    margin-bottom: 10px;
+  }
+  .navbar .menuItems2 {
+    margin-left: 20px;
   }
 
-  .menuItems li a {
+  .menuItems2 li {
+    padding: 5px;
+    margin-bottom: 0;
+  }
+
+  .menuItems2 li a {
+    font-weight: 400 !important;
+  }
+
+  .menuItems li a,
+  .menuItems li p {
+    color: #002b5e;
     font-weight: 600;
-    color: rgb(3, 11, 100);
-    font-size: 18px;
-  }
-
-  .menuItems li a:hover {
-    color: #fff;
   }
 
   .navbar .menuItems li {
     left: 0;
-    color: rgb(3, 11, 100) !important;
   }
 
   .navLogo {
@@ -198,4 +214,4 @@ a:hover {
   .navbarContainer .hamburgerLines {
     right: 25px;
   }
-} */
+}

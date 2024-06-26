@@ -11,10 +11,10 @@ const ComingSoon = ({ onclose }) => {
 
   return (
     <div
-      className='fixed backdrop-filter backdrop-blur-md h-full w-full flex items-center justify-center z-[999px] top-0 left-0'
+      className='fixed backdrop-filter backdrop-blur-md h-full w-full flex items-center justify-center z-50 top-0 left-0'
       onClick={handleModalOverlayClick}
     >
-      <div className='bg-transparent md:max-h-[450px] max-h-[600px] overflow-auto text-white border border-slate-300 rounded-lg p-5 h-full md:h-[75%] w-full md:w-1/2'>
+      <div className='bg-[#002B5E] md:max-h-[450px] max-h-[600px] overflow-auto text-white border border-slate-300 rounded-lg p-5 h-full md:h-[75%] w-full md:w-1/2'>
         <div className='h-full'>
           <div className='flex justify-end'>
             <img
