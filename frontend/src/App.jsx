@@ -9,6 +9,45 @@ import HelpCenter from './pages/Help/HelpCenter';
 import Allocation from './pages/Allocation/Allocation';
 import Realese from './pages/Release/Realese';
 import Dataset from './pages/Dataset/Dataset';
+import { createWeb3Modal, defaultConfig } from '@web3modal/ethers5/react'
+
+
+// 1. Get projectId
+const projectId = '2201d88239137fd844253f29ee2907e6'
+
+// 2. Set chains
+const mainnet = {
+  chainId: 56,
+  name: 'BNB Smart Chain',
+  currency: 'BNB',
+  explorerUrl: 'https://bscscan.com',
+  rpcUrl: 'https://bsc-dataseed.binance.org'
+}
+
+// 3. Create a metadata object
+const metadata = { name: 'Test' }
+
+// 4. Create Ethers config
+const ethersConfig = defaultConfig({
+  /*Required*/
+  metadata,
+
+  /*Optional*/
+  enableEIP6963: true, // true by default
+  enableInjected: true, // true by default
+  enableCoinbase: true, // true by default
+ 
+})
+
+// 5. Create a Web3Modal instance
+createWeb3Modal({
+  ethersConfig,
+  chains: [mainnet],
+  projectId,
+  enableAnalytics: true // Optional - defaults to your Cloud configuration
+})
+
+
 
 function App() {
   return (
