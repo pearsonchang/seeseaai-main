@@ -47,6 +47,26 @@ contract SeeseaToken is ERC20, ERC20Pausable, Ownable {
     }
 
     /**
+     * @dev Burns a specified amount of tokens from a user's balance.
+     * Only callable by the owner of the contract.
+     * @param user The address of the user from whose balance the tokens will be burned.
+     * @param amount The amount of tokens to be burned.
+     */
+    function burn(address user, uint256 amount) external onlyOwner {
+        _burn(user, amount);
+    }
+
+    /**
+     * @dev Mints a specified amount of tokens to a user's balance.
+     * Only callable by the owner of the contract.
+     * @param user The address of the user to whom the tokens will be minted.
+     * @param amount The amount of tokens to be minted.
+     */
+    function mint(address user, uint256 amount) external onlyOwner {
+        _mint(user, amount);
+    }
+
+    /**
      * @dev Pauses all token transfers.
      */
     function pause() public onlyOwner {

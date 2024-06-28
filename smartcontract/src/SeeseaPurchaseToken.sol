@@ -37,7 +37,7 @@ contract SeeseaPurchaseToken is Ownable {
     IERC20 public immutable seeSeaToken;
     AggregatorV3Interface internal bnbUsdPriceFeed;
     uint256 private constant TIMEOUT = 1 hours;
-    uint256 public constant USDT_PRICE = 50000; // 0.05 USDT in smallest units (6 decimals)
+    uint256 public constant USDT_PRICE = 0.05 ether; // 0.05 USDT in smallest units (18 decimals)
     uint256 public constant SEE_SEA_AI_PRECISION = 1e18; // SEE_SEA_AI token precision (18 decimals)
 
     uint256 public totalPurchase;
@@ -93,10 +93,9 @@ contract SeeseaPurchaseToken is Ownable {
      */
     function buyWithBNB() external payable {
         uint256 msgValueEquivalentUSDT = (msg.value * getBNBUSDTPrice()) / 1e18;
-        // uint256 msgValueEquivalentUSDT = (msg.value * 300) / 1e18;
 
         uint256 msgValueEquivalentUSDTIn6Decimals = (msgValueEquivalentUSDT *
-            1e6) / 1e8;
+            1e18) / 1e8;
 
         if (msgValueEquivalentUSDTIn6Decimals < USDT_PRICE)
             revert SeeSeaToken_PriceBelowMinPrice();

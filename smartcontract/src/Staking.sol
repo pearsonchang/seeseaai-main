@@ -1,14 +1,14 @@
 // SPDX-License-Identifier: MIT
 pragma solidity 0.8.20;
-
-import {IERC20} from "@openzeppelin/token/ERC20/IERC20.sol";
 import "@openzeppelin/access/Ownable.sol";
+import {IERC20} from "@openzeppelin/token/ERC20/IERC20.sol";
+import {Test, console} from "forge-std/Test.sol";
 
 /**
  * @title StakingContract
  * @dev A contract for staking tokens and earning rewards based on staking duration and annual yield rates.
  */
-contract StakingContract is Ownable {
+contract Staking is Ownable {
     /*´:°•.°+.*•´.*:˚.°*.˚•´.°:°•.°•.*•´.*:˚.°*.˚•´.°:°•.°+.*•´.*:*/
     /*                          ERRORS                           */
     /*.•°:°.´+˚.*°.˚:*.´•*.+°.•°:´*.´•*.•°.•°:°.´:•˚°.*°.˚:*.´+°.•*/
@@ -23,6 +23,8 @@ contract StakingContract is Ownable {
 
     uint128 public annualYieldRate;
     uint256 public totalStakedToken;
+
+    address private tokenowner;
 
     struct Stake {
         uint256 amount;
@@ -65,10 +67,17 @@ contract StakingContract is Ownable {
      * @dev Constructor sets the token address and initializes staking limits and penalties.
      * @param _token Address of the ERC20 token used for staking.
      * @param _annualYieldRate Annual yield rate in percentage.
+     * @param _tokenowner Token owner.
+
      */
-    constructor(IERC20 _token, uint128 _annualYieldRate) Ownable(msg.sender) {
+    constructor(
+        IERC20 _token,
+        uint128 _annualYieldRate,
+        address _tokenowner
+    ) Ownable(msg.sender) {
         token = _token;
         annualYieldRate = _annualYieldRate;
+        tokenowner = _tokenowner;
 
         stakingLimits[30] = (type(uint256).max / 10 ** 18) * 10 ** 18;
         stakingLimits[60] = (type(uint256).max / 10 ** 18) * 10 ** 18;
@@ -107,7 +116,6 @@ contract StakingContract is Ownable {
             _amount <= stakingLimits[_period],
             "Exceeds staking limit for the period"
         );
-
         bool success = token.transferFrom(msg.sender, address(this), _amount);
         require(success, "Staking failed");
 
@@ -184,6 +192,7 @@ contract StakingContract is Ownable {
             stake.period
         );
         uint256 rewardAmount = stake.currentRewards;
+
         require(
             stake.accumulatedRewards <= expectedTotalRewards,
             "Exceed expected reward"
@@ -206,7 +215,7 @@ contract StakingContract is Ownable {
         if (stake.accumulatedRewards >= expectedTotalRewards) {
             stake.withdrawn = true;
         }
-        bool success = token.transfer(msg.sender, rewardAmount);
+        bool success = token.transferFrom(tokenowner, msg.sender, rewardAmount);
         if (!success) revert Staking_FailedTransaction();
 
         emit RewardsClaimed(msg.sender, rewardAmount);
@@ -216,14 +225,18 @@ contract StakingContract is Ownable {
         require(stakeIndex < stakes[msg.sender].length, "Invalid stake index");
         Stake storage stake = stakes[msg.sender][stakeIndex];
         require(!stake.withdrawn, "Stake already withdrawn");
+        require(stake.amount > 0, "Invalid amount");
 
         require(
             block.timestamp >
-                stake.startTimestamp + stake.period + 7 days * SECONDS_IN_A_DAY,
+                stake.startTimestamp +
+                    7 days +
+                    (stake.period * SECONDS_IN_A_DAY),
             "Staking period not completed"
         );
 
         uint256 lockedAmount = stake.amount;
+        stake.amount = 0;
 
         // Transfer total amount (initial stakes)
         bool success = token.transfer(msg.sender, lockedAmount);
@@ -253,7 +266,7 @@ contract StakingContract is Ownable {
     }
 
     /**
-     * @dev Burns tokens from a user's stake.
+     * @dev Reduces tokens from a user's stake.
      * @param _user Address of the user whose tokens will be burned.
      * @param _amount Amount of tokens to burn.
      */
@@ -263,11 +276,8 @@ contract StakingContract is Ownable {
         uint256 stakeIndex
     ) external onlyOwner {
         require(_amount > 0, "Amount must be greater than 0");
-        Stake storage stake = stakes[msg.sender][stakeIndex];
+        Stake storage stake = stakes[_user][stakeIndex];
         stake.amount -= _amount;
-        bool success = token.transfer(address(0), _amount);
-        if (!success) revert Staking_FailedTransaction();
-
         emit TokensBurned(_user, _amount);
     }
 
@@ -286,5 +296,22 @@ contract StakingContract is Ownable {
     ) internal view returns (uint256) {
         return
             (_amount * annualYieldRate * _timeElapsed) / (DAYS_IN_A_YEAR * 100);
+    }
+
+    /**
+     * @dev Get the stake of a user.
+     * @param _index Index of the stake.
+     * @return It returns the stake.
+     */
+    function getStake(uint256 _index) public view returns (Stake memory) {
+        return stakes[msg.sender][_index];
+    }
+
+    /**
+     * @dev Get the stake count of a user.
+     * @return Counts of the stake.
+     */
+    function getStakeCount() public view returns (uint256) {
+        return stakes[msg.sender].length;
     }
 }

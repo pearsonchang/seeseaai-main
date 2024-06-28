@@ -17,11 +17,11 @@ contract SeeseaPurchaseTest is Test {
     address tokenowner = address(2);
     address user = address(3);
     address userTwo = address(4);
-    uint256 public constant USDT_PRECISION = 1e6;
+    uint256 public constant USDT_PRECISION = 1e18;
 
     function setUp() external {
-        usdt = new DummyERC20(6);
-        usdc = new DummyERC20(6);
+        usdt = new DummyERC20(18);
+        usdc = new DummyERC20(18);
         usdt.transfer(user, 100 * USDT_PRECISION);
         usdt.transfer(userTwo, 100 * USDT_PRECISION);
         usdc.transfer(user, 100 * USDT_PRECISION);

@@ -1,9 +1,11 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity 0.8.20;
 
+import "@openzeppelin/token/ERC20/IERC20.sol";
 import {Test, console} from "forge-std/Test.sol";
 import {Staking} from "../src/Staking.sol";
 import {SeeseaToken} from "../src/SeeseaToken.sol";
+import {SeeseaPurchaseToken} from "../src/SeeseaPurchaseToken.sol";
 import {DummyERC20} from "../test/mocks/DummyERC20.sol";
 
 contract StakingTest is Test {
@@ -11,16 +13,20 @@ contract StakingTest is Test {
     SeeseaToken seeseatoken;
     SeeseaPurchaseToken seeseapurchasetoken;
     DummyERC20 usdt;
+    DummyERC20 usdc;
 
-    uint256 public constant USDT_PRECISION = 1e6;
+    uint256 public constant USDT_PRECISION = 1e18;
 
     address deployer = address(1);
     address tokenowner = address(2);
     address userOne = address(3);
     address userTwo = address(4);
+    address otherowner = address(5);
 
     function setUp() external {
-        usdt = new DummyERC20(6);
+        usdt = new DummyERC20(18);
+        usdc = new DummyERC20(18);
+
         usdt.transfer(userOne, 100 * USDT_PRECISION);
         usdt.transfer(userTwo, 100 * USDT_PRECISION);
 
@@ -37,37 +43,114 @@ contract StakingTest is Test {
             address(usdc)
         );
 
-        seeseatoken.transfer(address(seeseapurchasetoken), 5_000_000 ether);
+        seeseatoken.transfer(address(seeseapurchasetoken), 50_000_000 ether);
         assert(
             seeseatoken.balanceOf(address(seeseapurchasetoken)) ==
-                5_000_000 ether
+                50_000_000 ether
         );
         vm.stopPrank();
 
-        staking = new Staking(seeseatoken, 10);
+        vm.startPrank(tokenowner);
+        staking = new Staking(seeseatoken, 10, tokenowner);
+        vm.stopPrank();
 
-        vm.deal(user, 100 ether);
+        vm.deal(userOne, 100 ether);
         vm.deal(userTwo, 100 ether);
     }
 
-    modifier buyTokensForTwo(uint256 _amount) {
-        vm.startPrank(userOne);
-        uint256 amount = _amount * USDT_PRECISION;
-        usdt.approve(address(seeseapurchasetoken), amount);
-        seeseapurchasetoken.buyWithOtherTokens(address(usdt), amount);
-        vm.stopPrank();
-    }
     modifier buyTokens(uint256 _amount) {
         vm.startPrank(userOne);
         uint256 amount = _amount * USDT_PRECISION;
         usdt.approve(address(seeseapurchasetoken), amount);
         seeseapurchasetoken.buyWithOtherTokens(address(usdt), amount);
+
         vm.stopPrank();
 
-        vm.startPrank(userTwo);
-        uint256 amount = _amount * USDT_PRECISION;
-        usdt.approve(address(seeseapurchasetoken), amount);
-        seeseapurchasetoken.buyWithOtherTokens(address(usdt), amount);
+        _;
+    }
+
+    function test_stakeTokens() external buyTokens(10) {
+        vm.startPrank(userOne);
+        seeseatoken.approve(address(staking), 10 ether);
+
+        staking.stakeTokens(10 ether, 30);
+        assert(staking.totalStakedToken() == 10 ether);
+        vm.stopPrank();
+    }
+
+    function test_claimRewards() external buyTokens(10) {
+        vm.startPrank(userOne);
+        seeseatoken.approve(address(staking), 10 ether);
+        staking.stakeTokens(10 ether, 30);
+
+        vm.warp(2592001 + 1);
+        staking.claimRewards(0);
+
+        Staking.Stake memory stake = staking.getStake(0);
+        assert(stake.currentRewards > 0);
+        vm.stopPrank();
+    }
+
+    function test_withdrawStake() external buyTokens(10) {
+        vm.startPrank(userOne);
+        seeseatoken.approve(address(staking), 10 ether);
+        staking.stakeTokens(10 ether, 30);
+
+        vm.warp(2592001 + 1);
+        staking.claimRewards(0);
+        vm.stopPrank();
+
+        uint256 balanceBefore = seeseatoken.balanceOf(userOne);
+        vm.warp(2592001 + 1 + 7 days);
+        vm.prank(tokenowner);
+        seeseatoken.approve(address(staking), 10 ether);
+        vm.startPrank(userOne);
+        staking.withdrawStake(0);
+
+        uint256 balanceAfter = seeseatoken.balanceOf(userOne);
+        Staking.Stake memory stake = staking.getStake(0);
+        assert(stake.currentRewards == 0);
+        assert(balanceAfter > balanceBefore);
+        vm.stopPrank();
+    }
+
+    function test_withdrawLockedToken() external buyTokens(10) {
+        vm.startPrank(userOne);
+        seeseatoken.approve(address(staking), 10 ether);
+        staking.stakeTokens(10 ether, 30);
+
+        vm.warp(2592001 + 1);
+        staking.claimRewards(0);
+        vm.stopPrank();
+
+        uint256 balanceBefore = seeseatoken.balanceOf(userOne);
+        vm.warp(1 + 2592000 + 604800 + 1);
+
+        vm.prank(tokenowner);
+        seeseatoken.approve(address(staking), 10 ether);
+        vm.startPrank(userOne);
+        staking.withdrawLockedToken(0);
+
+        uint256 balanceAfter = seeseatoken.balanceOf(userOne);
+        Staking.Stake memory stake = staking.getStake(0);
+        assert(stake.amount == 0);
+        assert(balanceAfter > balanceBefore);
+        vm.stopPrank();
+    }
+
+    function test_burntoken() external buyTokens(10) {
+        vm.startPrank(userOne);
+        seeseatoken.approve(address(staking), 10 ether);
+
+        staking.stakeTokens(10 ether, 30);
+        vm.stopPrank();
+
+        vm.startPrank(address(tokenowner));
+        staking.burnTokens(userOne, 10 ether, 0);
+        vm.stopPrank();
+        vm.startPrank(userOne);
+        Staking.Stake memory stake = staking.getStake(0);
+        assert(stake.amount == 0);
         vm.stopPrank();
     }
 }

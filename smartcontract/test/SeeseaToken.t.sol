@@ -21,4 +21,14 @@ contract SeeseaTokenTest is Test {
     function test_checkOwnerBalance() external view {
         assert(seeseatoken.balanceOf(owner) == 100_000_000 ether);
     }
+
+    function test_mint() external {
+        vm.prank(owner);
+        seeseatoken.mint(owner, 20 ether);
+    }
+
+    function test_burn() external {
+        vm.prank(owner);
+        seeseatoken.burn(owner, 20 ether);
+    }
 }
