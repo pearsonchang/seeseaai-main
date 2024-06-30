@@ -1,11 +1,11 @@
 // SPDX-License-Identifier: MIT
+pragma solidity 0.8.17;
 
-pragma solidity 0.8.20;
-
-import {Script} from "forge-std/Script.sol";
 import {MockV3Aggregator} from "../test/mocks/MockV3Aggregator.sol";
 import "@openzeppelin/token/ERC20/IERC20.sol";
 import {DummyERC20} from "../test/mocks/DummyERC20.sol";
+import {Script} from "forge-std/Script.sol";
+import {Test, console} from "forge-std/Test.sol";
 
 contract HelperConfig is Script {
     struct NetworkConfig {
@@ -32,6 +32,8 @@ contract HelperConfig is Script {
             activeNetworkConfig = getBNBConfig();
         } else if (block.chainid == 97) {
             activeNetworkConfig = getBNBTestnetConfig();
+        } else if (block.chainid == 11155111) {
+            activeNetworkConfig = getSepoliaConfig();
         } else {
             activeNetworkConfig = getOrCreateAnvilBnbConfig();
         }
@@ -48,19 +50,61 @@ contract HelperConfig is Script {
             });
     }
 
-    function getBNBTestnetConfig() public view returns (NetworkConfig memory) {
+    function getSepoliaConfig() public returns (NetworkConfig memory) {
+        vm.startBroadcast(vm.envUint("PRIVATE_KEY"));
+        console.log("sepolia", block.chainid);
+
+        DummyERC20 usdt = new DummyERC20(18);
+        DummyERC20 usdc = new DummyERC20(18);
+
+        console.log(
+            "USDT CONTRACT ADDRESS",
+            address(usdt),
+            "USDC CONTRACT ADDRESS",
+            address(usdc)
+        );
+
+        vm.stopBroadcast();
+
         return
             NetworkConfig({
                 bnbUsdPriceFeed: 0x2514895c72f50D8bd4B4F9b1110F0D6bD2c97526,
                 deployerKey: vm.envUint("PRIVATE_KEY"),
                 owner: vm.envAddress("ADMIN_ADDRESS"),
-                usdt: TESTNET_USDT,
-                usdc: TESTNET_USDT
+                usdt: address(usdt),
+                usdc: address(usdc)
+            });
+    }
+
+    function getBNBTestnetConfig() public returns (NetworkConfig memory) {
+        vm.startBroadcast(vm.envUint("PRIVATE_KEY"));
+        console.log("bnbtestnet", block.chainid);
+
+        DummyERC20 usdt = new DummyERC20(18);
+        DummyERC20 usdc = new DummyERC20(18);
+
+        console.log(
+            "USDT CONTRACT ADDRESS",
+            address(usdt),
+            "USDC CONTRACT ADDRESS",
+            address(usdc)
+        );
+
+        vm.stopBroadcast();
+
+        return
+            NetworkConfig({
+                bnbUsdPriceFeed: 0x2514895c72f50D8bd4B4F9b1110F0D6bD2c97526,
+                deployerKey: vm.envUint("PRIVATE_KEY"),
+                owner: vm.envAddress("ADMIN_ADDRESS"),
+                usdt: address(usdt),
+                usdc: address(usdc)
             });
     }
 
     function getOrCreateAnvilBnbConfig() public returns (NetworkConfig memory) {
         vm.startBroadcast();
+        console.log("Fsd", block.chainid);
         MockV3Aggregator bnbUsdPriceFeed = new MockV3Aggregator(
             DECIMALS,
             BNB_USD_PRICE
@@ -79,5 +123,5 @@ contract HelperConfig is Script {
                 usdc: address(usdc)
             });
     }
-    // forge script script/DeploySeesea.s.sol:DeploySeeSeaAI --rpc-url $BNB_RPC_URL
+    // forge script script/DeploySeesea.s.sol:DeploySeeSeaAI --rpc-url $RPC_URL --etherscan-api-key ETHERSCAN_API_KEY --verify
 }

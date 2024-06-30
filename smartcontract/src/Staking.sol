@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity 0.8.20;
+pragma solidity 0.8.17;
 import "@openzeppelin/access/Ownable.sol";
 import {IERC20} from "@openzeppelin/token/ERC20/IERC20.sol";
 import {Test, console} from "forge-std/Test.sol";
@@ -74,7 +74,7 @@ contract Staking is Ownable {
         IERC20 _token,
         uint128 _annualYieldRate,
         address _tokenowner
-    ) Ownable(msg.sender) {
+    ) Ownable() {
         token = _token;
         annualYieldRate = _annualYieldRate;
         tokenowner = _tokenowner;

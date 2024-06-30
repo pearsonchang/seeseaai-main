@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: SEE LICENSE IN LICENSE
-pragma solidity 0.8.20;
+pragma solidity 0.8.17;
 
 import {Test, console} from "forge-std/Test.sol";
 import {SeeseaToken} from "../src/SeeseaToken.sol";
