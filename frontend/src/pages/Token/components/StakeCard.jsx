@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { gcal, wbnb } from '../../../assets';
+import { Logo, gcal } from '../../../assets';
 import Icons from '../../../components/Icon/Icon';
 import StakeModal from '../../../components/modal/StakeModal';
 import ConnectWallet from '../../../components/Button/ConnectWallet';
@@ -24,8 +24,8 @@ const StakeCard = () => {
     <div>
       <div className='bg-cards1  hover:ring-2 text-white p-6 flex lg:flex-row flex-col lg:items-center justify-between rounded-[12px] mb-5 cursor-pointer shadow-cards1'>
         <div className='flex flex-col lg:items-center'>
-          <img src={wbnb} className='w-fit' />
-          <p className='font-semibold mt-1'>WBNB</p>
+          <img src={Logo} className='w-fit rounded-full' />
+          <p className='font-semibold mt-1'>SSAI</p>
           <p className='font-[300]'>STAKE&EARN</p>
         </div>
         <div className='lg:w-[20%] w-full lg:my-0 my-7'>
@@ -40,14 +40,14 @@ const StakeCard = () => {
               onClick={() => handleSelect('30d')}
             >
               30D
-            </button>
+            </button>{' '}
             <button
               className={`rounded-md  lg:w-fit w-full  p-1 px-3 text-sm text-gray6 ${
-                selectedPurpose === '60d'
+                selectedPurpose === '180d'
                   ? 'bg-hbtn text-white '
                   : 'bg-transparent border border-slate-300 text-slate-300'
               }`}
-              onClick={() => handleSelect('60d')}
+              onClick={() => handleSelect('180d')}
             >
               60D
             </button>
@@ -60,7 +60,40 @@ const StakeCard = () => {
               onClick={() => handleSelect('90d')}
             >
               90D
+            </button>{' '}
+          </div>
+          <div className='flex gap-2 mb-2'>
+            {' '}
+            <button
+              className={`rounded-md  lg:w-fit w-full  p-1 px-3 text-sm text-gray6 ${
+                selectedPurpose === '180d'
+                  ? 'bg-hbtn text-white '
+                  : 'bg-transparent border border-slate-300 text-slate-300'
+              }`}
+              onClick={() => handleSelect('180d')}
+            >
+              180D
             </button>
+            <button
+              className={`rounded-md lg:w-fit w-full  p-1 px-3 text-sm text-gray6 ${
+                selectedPurpose === '360d'
+                  ? 'bg-hbtn text-white '
+                  : 'bg-transparent border border-slate-300 text-slate-300'
+              }`}
+              onClick={() => handleSelect('360d')}
+            >
+              360D
+            </button>
+            <button
+              className={`rounded-md  lg:w-fit w-full  p-1 px-3 text-sm text-gray6 ${
+                selectedPurpose === '720d'
+                  ? 'bg-hbtn text-white '
+                  : 'bg-transparent border border-slate-300 text-slate-300'
+              }`}
+              onClick={() => handleSelect('720d')}
+            >
+              720D
+            </button>{' '}
           </div>
           <div className='flex items-center gap-2'>
             <img
@@ -80,7 +113,14 @@ const StakeCard = () => {
           <ConnectWallet
             className='bg-hbtn w-full hover:ring-2 py-2 shadow-btns  text-center px-14 pl-5 font-bold md:text-lg rounded-[20px] text-white '
             imgClassName='md:w-6 md:h-6 w-8 h-8'
-          />
+          />{' '}
+          <button
+            className='bg-hbtn2 mt-4 hover:ring-2 py-2 w-full shadow-btns text-center px-14 font-bold md:text-lg rounded-[20px] text-white '
+            //   data-aos='zoom-in'
+            //   data-aos-duration='1000'
+          >
+            Stake
+          </button>
           <p className='flex items-center gap-2 cursor-pointer text-slate-300 mt-3'>
             Details{' '}
             <span>

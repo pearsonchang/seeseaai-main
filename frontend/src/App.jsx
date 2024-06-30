@@ -17,11 +17,25 @@ const projectId = '2201d88239137fd844253f29ee2907e6'
 
 // 2. Set chains
 const mainnet = {
+  chainId: 1,
+  name: 'Ethereum',
+  currency: 'ETH',
+  explorerUrl: 'https://etherscan.io',
+  rpcUrl: 'https://cloudflare-eth.com'
+}
+const bnb = {
   chainId: 56,
   name: 'BNB Smart Chain',
   currency: 'BNB',
   explorerUrl: 'https://bscscan.com',
   rpcUrl: 'https://bsc-dataseed.binance.org'
+}
+const bnbtest = {
+  chainId: 97,
+  name: 'BSC Testnet',
+  currency: 'BNB',
+  explorerUrl: 'https://explorer.binance.org/smart-testnet',
+  rpcUrl: 'https://bsc-testnet-rpc.publicnode.com'
 }
 
 // 3. Create a metadata object
@@ -42,7 +56,7 @@ const ethersConfig = defaultConfig({
 // 5. Create a Web3Modal instance
 createWeb3Modal({
   ethersConfig,
-  chains: [mainnet],
+  chains: [bnb, bnbtest, mainnet],
   projectId,
   enableAnalytics: true // Optional - defaults to your Cloud configuration
 })
