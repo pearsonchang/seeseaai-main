@@ -1,4 +1,13 @@
-import { merc, bnb2, reload, usd, Logo, usdc, usdt } from '../../../assets';
+import {
+  merc,
+  bnb2,
+  reload,
+  usd,
+  Logo,
+  usdc,
+  usdt,
+  bnb,
+} from '../../../assets';
 import Icons from '../../../components/Icon/Icon';
 import { useState } from 'react';
 import ConnectWallet from '../../../components/Button/ConnectWallet';
@@ -6,17 +15,19 @@ import ConnectWallet from '../../../components/Button/ConnectWallet';
 const TPHero = () => {
   const [val, setVal] = useState(150);
   const [val2, setVal2] = useState(0.23452);
-  const [selectedCurrency, setSelectedCurrency] = useState('USD');
+  const [selectedCurrency, setSelectedCurrency] = useState('BNB');
+  const [selectedIcon, setSelectedIcon] = useState(usd);
+  const [openDropdown, setOpenDropdown] = useState(false);
 
   const currencies = [
-    { name: 'USD', icon: usd },
+    { name: 'BNB', icon: bnb },
     { name: 'USDT', icon: usdt },
     { name: 'USDC', icon: usdc },
   ];
 
-  const handleSelect = (currency) => {
+  const handleSelect = (currency, icon) => {
     setSelectedCurrency(currency);
-    console.log('currency', currency);
+    setSelectedIcon(icon);
   };
 
   return (
@@ -38,7 +49,9 @@ const TPHero = () => {
         </p>
         <div className='rounded-xl bg-cards1 p-5  md:p-8 mt-10 text-white'>
           <div
-            className='bg-[#010E35] rounded-[17px] relative mb-8'
+            className={`bg-[#010E35] rounded-[17px] relative ${
+              openDropdown ? 'mb-8' : 'mb-8'
+            } `}
             // data-aos='fade-up'
             // data-aos-duration='1000'
           >
@@ -52,69 +65,36 @@ const TPHero = () => {
                 icon='pepicons-pencil:line-y'
                 className='md:text-4xl text-3xl text-white '
               />
-              {/* <img src={usd} className='md:w-8 w-6 md:h-8 h-6' />
-              <p className='md:text-2xl text-xl'>USD</p>
-              <Icons
-                icon='ooui:down-triangle'
-                className='md:text-2xl text-xl'
-              /> */}{' '}
-              <img src={usd} className='md:w-8 w-6 md:h-8 h-6' />
-              <p className='md:text-2xl text-xl'>USD</p>
-              <Icons
-                icon='ooui:down-triangle'
-                className='md:text-2xl text-xl'
-              />{' '}
-              {/* <div className='relative inline-block text-left'>
-                <div>
-                  <button
-                    type='button'
-                    className='inline-flex justify-center w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500'
-                    id='menu-button'
-                    aria-expanded='true'
-                    aria-haspopup='true'
-                  >
-                    {selectedCurrency}
-                    <Icons
-                      icon='ooui:down-triangle'
-                      className='md:text-2xl text-xl ml-2'
-                    />
-                  </button>
-                </div>
 
-                <div
-                  className='origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none'
-                  role='menu'
-                  aria-orientation='vertical'
-                  aria-labelledby='menu-button'
-                  tabIndex='-1'
-                >
-                  <div className='py-1' role='none'>
-                    {currencies.map((currency) => (
-                      <div
-                        key={currency.name}
-                        className='absolute flex justify-between items-center top-4 md:top-3 right-3 gap-3 md:gap-5 cursor-pointer'
-                        onClick={() => handleSelect(currency.name)}
-                      >
-                        <Icons
-                          icon='pepicons-pencil:line-y'
-                          className='md:text-4xl text-3xl text-white'
-                        />
-                        <img
-                          src={currency.icon}
-                          className='md:w-8 w-6 md:h-8 h-6'
-                          alt={`${currency.name} icon`}
-                        />
-                        <p className='md:text-2xl text-xl'>{currency.name}</p>
-                        <Icons
-                          icon='ooui:down-triangle'
-                          className='md:text-2xl text-xl'
-                        />
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div> */}
-            </div>
+              <div
+                className='flex justify-between cursor-pointer items-center md:gap-5 gap-3'
+                onClick={() => setOpenDropdown(!openDropdown)}
+              >
+                <img src={selectedIcon} className='md:w-8 w-6 md:h-8 h-6' />
+                <p className='md:text-2xl text-xl'>{selectedCurrency}</p>
+                <Icons
+                  icon='ooui:down-triangle'
+                  className='md:text-2xl text-xl'
+                />{' '}
+              </div>
+            </div>{' '}
+            {openDropdown && (
+              <div className='absolute z-50 right-0 w-[200px] rounded-lg bg-hbtn2 py-3'>
+                {currencies.map((curr, i) => (
+                  <p
+                    key={i}
+                    className='flex items-center gap-5 hover:bg-white px-3 py-1 hover:text-[#010e35] cursor-pointer'
+                    onClick={() => {
+                      handleSelect(curr.name, curr.icon);
+                      setOpenDropdown(false);
+                    }}
+                  >
+                    <img src={curr.icon} className='md:w-7 w-5 md:h-7 h-5' />
+                    <p className='md:text-xl text-xl'>{curr.name}</p>
+                  </p>
+                ))}
+              </div>
+            )}
           </div>
           <div
             className='bg-[#010E35] rounded-[17px] relative mb-8'
