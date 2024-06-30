@@ -1,4 +1,4 @@
-import { merc, bnb, bnb2, reload, usd } from '../../../assets';
+import { merc, bnb2, reload, usd, Logo, usdc, usdt } from '../../../assets';
 import Icons from '../../../components/Icon/Icon';
 import { useState } from 'react';
 import ConnectWallet from '../../../components/Button/ConnectWallet';
@@ -6,6 +6,18 @@ import ConnectWallet from '../../../components/Button/ConnectWallet';
 const TPHero = () => {
   const [val, setVal] = useState(150);
   const [val2, setVal2] = useState(0.23452);
+  const [selectedCurrency, setSelectedCurrency] = useState('USD');
+
+  const currencies = [
+    { name: 'USD', icon: usd },
+    { name: 'USDT', icon: usdt },
+    { name: 'USDC', icon: usdc },
+  ];
+
+  const handleSelect = (currency) => {
+    setSelectedCurrency(currency);
+    console.log('currency', currency);
+  };
 
   return (
     <div className='pt-36'>
@@ -27,8 +39,8 @@ const TPHero = () => {
         <div className='rounded-xl bg-cards1 p-5  md:p-8 mt-10 text-white'>
           <div
             className='bg-[#010E35] rounded-[17px] relative mb-8'
-            data-aos='fade-up'
-            data-aos-duration='1000'
+            // data-aos='fade-up'
+            // data-aos-duration='1000'
           >
             <input
               className='w-full bg-[#010E35] rounded-[17px] hover:ring-2 outline-none px-3 md:px-6 text-xl font-[300] py-4'
@@ -40,12 +52,68 @@ const TPHero = () => {
                 icon='pepicons-pencil:line-y'
                 className='md:text-4xl text-3xl text-white '
               />
+              {/* <img src={usd} className='md:w-8 w-6 md:h-8 h-6' />
+              <p className='md:text-2xl text-xl'>USD</p>
+              <Icons
+                icon='ooui:down-triangle'
+                className='md:text-2xl text-xl'
+              /> */}{' '}
               <img src={usd} className='md:w-8 w-6 md:h-8 h-6' />
               <p className='md:text-2xl text-xl'>USD</p>
               <Icons
                 icon='ooui:down-triangle'
                 className='md:text-2xl text-xl'
-              />
+              />{' '}
+              {/* <div className='relative inline-block text-left'>
+                <div>
+                  <button
+                    type='button'
+                    className='inline-flex justify-center w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500'
+                    id='menu-button'
+                    aria-expanded='true'
+                    aria-haspopup='true'
+                  >
+                    {selectedCurrency}
+                    <Icons
+                      icon='ooui:down-triangle'
+                      className='md:text-2xl text-xl ml-2'
+                    />
+                  </button>
+                </div>
+
+                <div
+                  className='origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none'
+                  role='menu'
+                  aria-orientation='vertical'
+                  aria-labelledby='menu-button'
+                  tabIndex='-1'
+                >
+                  <div className='py-1' role='none'>
+                    {currencies.map((currency) => (
+                      <div
+                        key={currency.name}
+                        className='absolute flex justify-between items-center top-4 md:top-3 right-3 gap-3 md:gap-5 cursor-pointer'
+                        onClick={() => handleSelect(currency.name)}
+                      >
+                        <Icons
+                          icon='pepicons-pencil:line-y'
+                          className='md:text-4xl text-3xl text-white'
+                        />
+                        <img
+                          src={currency.icon}
+                          className='md:w-8 w-6 md:h-8 h-6'
+                          alt={`${currency.name} icon`}
+                        />
+                        <p className='md:text-2xl text-xl'>{currency.name}</p>
+                        <Icons
+                          icon='ooui:down-triangle'
+                          className='md:text-2xl text-xl'
+                        />
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div> */}
             </div>
           </div>
           <div
@@ -63,9 +131,9 @@ const TPHero = () => {
                 icon='pepicons-pencil:line-y'
                 className='md:text-4xl text-3xl text-white '
               />
-              <img src={bnb} className='md:w-8 w-6 md:h-8 h-6' />
+              <img src={Logo} className='md:w-8 w-6 md:h-8 h-6' />
               <div className='text-center'>
-                <p className='md:text-2xl text-xl p-0'>BNB</p>
+                <p className='md:text-2xl text-xl p-0'>SSAI</p>
                 <p className='md:text-xs text-[10px] font-[200] -mt-1'>
                   On binance
                 </p>
@@ -139,11 +207,19 @@ const TPHero = () => {
               />
             </div>
           </div>
-          <div className='flex justify-center items-center'>
+          <div className='flex justify-center gap-6 items-center'>
             <ConnectWallet
               className='bg-hbtn hover:ring-2 py-3 mb-5 shadow-btns text-center px-20 pl-9 font-bold md:text-xl rounded-[20px] text-white relative'
               imgClassName='md:w-10 md:h-10 w-8 h-8'
             />
+            <button
+              className='bg-hbtn hover:ring-2 py-3 mb-5 shadow-btns relative text-center px-14 font-bold md:text-xl rounded-[20px] text-white '
+              //   data-aos='zoom-in'
+              //   data-aos-duration='1000'
+              // onClick={handleRewardModalClick}
+            >
+              Buy
+            </button>{' '}
           </div>
           <div className=' ' data-aos='fade-up' data-aos-duration='1200'>
             <p className='text-slate-300 font-[300] text-xl text-center'>

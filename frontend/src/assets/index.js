@@ -31,6 +31,8 @@ import share from './share.png';
 import reward from './reward.png';
 import dscard from './dscard.png';
 import whitepaper from './SeeSeaAI-Whitre Paper.pdf';
+import usdc from './usdc.webp';
+import usdt from './usdt.png';
 
 export {
   Logo,
@@ -66,4 +68,6 @@ export {
   reward,
   dscard,
   whitepaper,
+  usdc,
+  usdt,
 };
