@@ -54,7 +54,6 @@ const TPHero = () => {
 
     try {
       await buyToken(amount, currency);
-      toast.success('Purchase successful');
       // console.log('Purchase successful:', amount, currency);
       // Handle successful purchase, e.g., show a success message
     } catch (error) {
@@ -146,7 +145,7 @@ const TPHero = () => {
       const receipt = await tx.wait();
 
       if (receipt.status === 1) {
-        toast.success('Transaction successful');
+        toast.success('Purchase successful');
       } else {
         toast.error('Transaction failed');
         // console.error('Transaction failed:', receipt);

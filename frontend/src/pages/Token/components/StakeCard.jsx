@@ -47,7 +47,6 @@ const StakeCard = () => {
 
     try {
       await stakeToken(amount, period);
-      toast.success(`Staking successful for ${period} days`);
       // Handle successful purchase, e.g., show a success message
     } catch (error) {
       console.error('Contract interaction failed:', error);
@@ -87,7 +86,7 @@ const StakeCard = () => {
     let receipt = await tx.wait();
 
     if (receipt.status === 1) {
-      toast.success('Transaction successful');
+      toast.success(`Staking successful for ${period} days`);
     } else {
       toast.error('Transaction failed');
       // console.error('Transaction failed:', receipt);

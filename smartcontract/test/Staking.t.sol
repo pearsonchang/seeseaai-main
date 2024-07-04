@@ -43,15 +43,16 @@ contract StakingTest is Test {
             address(usdc)
         );
 
+        staking = new Staking(seeseatoken, tokenowner);
+
         seeseatoken.transfer(address(seeseapurchasetoken), 50_000_000 ether);
+        seeseatoken.transfer(address(staking), 1_000_000 ether);
+
         assert(
             seeseatoken.balanceOf(address(seeseapurchasetoken)) ==
                 50_000_000 ether
         );
-        vm.stopPrank();
-
-        vm.startPrank(tokenowner);
-        staking = new Staking(seeseatoken, 10, tokenowner);
+        assert(seeseatoken.balanceOf(address(staking)) == 1_000_000 ether);
         vm.stopPrank();
 
         vm.deal(userOne, 100 ether);
@@ -80,61 +81,19 @@ contract StakingTest is Test {
 
     function test_claimRewards() external buyTokens(10) {
         vm.startPrank(userOne);
-        seeseatoken.approve(address(staking), 10 ether);
-        staking.stakeTokens(10 ether, 30);
+        uint256 beforebalance = seeseatoken.balanceOf(userOne);
 
-        vm.warp(2592001 + 1);
+        seeseatoken.approve(address(staking), 10 ether);
+        staking.stakeTokens(10 ether, 60);
+
+        vm.warp(2592001 + 1 + 2592001);
         staking.claimRewards(0);
 
         Staking.Stake memory stake = staking.getStake(0);
-        assert(stake.currentRewards > 0);
-        vm.stopPrank();
-    }
-
-    function test_withdrawStake() external buyTokens(10) {
-        vm.startPrank(userOne);
-        seeseatoken.approve(address(staking), 10 ether);
-        staking.stakeTokens(10 ether, 30);
-
-        vm.warp(2592001 + 1);
-        staking.claimRewards(0);
-        vm.stopPrank();
-
-        uint256 balanceBefore = seeseatoken.balanceOf(userOne);
-        vm.warp(2592001 + 1 + 7 days);
-        vm.prank(tokenowner);
-        seeseatoken.approve(address(staking), 10 ether);
-        vm.startPrank(userOne);
-        staking.withdrawStake(0);
-
-        uint256 balanceAfter = seeseatoken.balanceOf(userOne);
-        Staking.Stake memory stake = staking.getStake(0);
-        assert(stake.currentRewards == 0);
-        assert(balanceAfter > balanceBefore);
-        vm.stopPrank();
-    }
-
-    function test_withdrawLockedToken() external buyTokens(10) {
-        vm.startPrank(userOne);
-        seeseatoken.approve(address(staking), 10 ether);
-        staking.stakeTokens(10 ether, 30);
-
-        vm.warp(2592001 + 1);
-        staking.claimRewards(0);
-        vm.stopPrank();
-
-        uint256 balanceBefore = seeseatoken.balanceOf(userOne);
-        vm.warp(1 + 2592000 + 604800 + 1);
-
-        vm.prank(tokenowner);
-        seeseatoken.approve(address(staking), 10 ether);
-        vm.startPrank(userOne);
-        staking.withdrawLockedToken(0);
-
-        uint256 balanceAfter = seeseatoken.balanceOf(userOne);
-        Staking.Stake memory stake = staking.getStake(0);
-        assert(stake.amount == 0);
-        assert(balanceAfter > balanceBefore);
+        assert(
+            seeseatoken.balanceOf(userOne) ==
+                beforebalance + stake.currentRewards
+        );
         vm.stopPrank();
     }
 

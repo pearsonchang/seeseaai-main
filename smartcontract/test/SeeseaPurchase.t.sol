@@ -6,10 +6,12 @@ import "@openzeppelin/token/ERC20/IERC20.sol";
 import {SeeseaPurchaseToken} from "../src/SeeseaPurchaseToken.sol";
 import {SeeseaToken} from "../src/SeeseaToken.sol";
 import {DummyERC20} from "../test/mocks/DummyERC20.sol";
+import {MockV3Aggregator} from "../test/mocks/MockV3Aggregator.sol";
 
 contract SeeseaPurchaseTest is Test {
     SeeseaPurchaseToken seeseapurchasetoken;
     SeeseaToken seeseatoken;
+    MockV3Aggregator bnbUsdPriceFeed;
     DummyERC20 usdt;
     DummyERC20 usdc;
 
@@ -17,6 +19,8 @@ contract SeeseaPurchaseTest is Test {
     address tokenowner = address(2);
     address user = address(3);
     address userTwo = address(4);
+    uint8 public constant DECIMALS = 8;
+    int256 public constant BNB_USD_PRICE = 550e8;
     uint256 public constant USDT_PRECISION = 1e18;
 
     function setUp() external {
@@ -33,11 +37,14 @@ contract SeeseaPurchaseTest is Test {
         assert(usdc.balanceOf(user) == 100 * USDT_PRECISION);
         assert(usdc.balanceOf(userTwo) == 100 * USDT_PRECISION);
 
+        bnbUsdPriceFeed = new MockV3Aggregator(DECIMALS, BNB_USD_PRICE);
+
         seeseatoken = new SeeseaToken(tokenowner);
+
         vm.startPrank(tokenowner);
         seeseapurchasetoken = new SeeseaPurchaseToken(
             IERC20(seeseatoken),
-            0x2514895c72f50D8bd4B4F9b1110F0D6bD2c97526,
+            address(bnbUsdPriceFeed),
             address(usdt),
             address(usdc)
         );
@@ -68,14 +75,14 @@ contract SeeseaPurchaseTest is Test {
         vm.startPrank(user);
 
         seeseapurchasetoken.buyWithBNB{value: 1 ether}();
-        assert(seeseatoken.balanceOf(user) == 6000 ether);
+        assert(seeseatoken.balanceOf(user) == 11000 ether);
         vm.stopPrank();
     }
 
     function test_withdrawBNB() external {
         vm.startPrank(user);
         seeseapurchasetoken.buyWithBNB{value: 1 ether}();
-        assert(seeseatoken.balanceOf(user) == 6000 ether);
+        assert(seeseatoken.balanceOf(user) == 11000 ether);
         vm.stopPrank();
 
         vm.startPrank(tokenowner);
@@ -87,7 +94,7 @@ contract SeeseaPurchaseTest is Test {
     function test_withdrawByOnlyOwner() external {
         vm.startPrank(user);
         seeseapurchasetoken.buyWithBNB{value: 1 ether}();
-        assert(seeseatoken.balanceOf(user) == 6000 ether);
+        assert(seeseatoken.balanceOf(user) == 11000 ether);
         vm.stopPrank();
 
         vm.startPrank(userTwo);

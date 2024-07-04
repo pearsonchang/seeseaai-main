@@ -8,7 +8,7 @@ import {SeeseaToken} from "../src/SeeseaToken.sol";
 import {SeeseaPurchaseToken} from "../src/SeeseaPurchaseToken.sol";
 import {Staking} from "../src/Staking.sol";
 import {HelperConfig} from "./HelperConfig.s.sol";
-import {Test, console} from "forge-std/Test.sol";
+import {console} from "forge-std/Test.sol";
 
 contract DeploySeeSeaAI is Script {
     function run()
@@ -41,7 +41,7 @@ contract DeploySeeSeaAI is Script {
                 5_000_000 ether
         );
 
-        Staking staking = new Staking(seeseatoken, 10, owner);
+        Staking staking = new Staking(seeseatoken, owner);
 
         vm.stopBroadcast();
         return (seeseatoken, seeseapurchasetoken, staking, config);

@@ -2,7 +2,6 @@
 pragma solidity 0.8.20;
 import "@openzeppelin/access/Ownable.sol";
 import {IERC20} from "@openzeppelin/token/ERC20/IERC20.sol";
-import {Test, console} from "forge-std/Test.sol";
 
 /**
  * @title StakingContract
@@ -21,8 +20,8 @@ contract Staking is Ownable {
     uint32 constant SECONDS_IN_A_DAY = 86400;
     uint16 constant DAYS_IN_A_YEAR = 365;
 
-    uint128 public annualYieldRate;
     uint256 public totalStakedToken;
+    uint256 public totalRewardDistributed;
 
     address private tokenowner;
 
@@ -34,13 +33,14 @@ contract Staking is Ownable {
         bool withdrawn;
         uint256 lastClaimTimestamp;
         uint256 lastRewardTimestamp;
-        uint256 accumulatedRewards;
         uint256 currentRewards;
     }
 
     mapping(address => Stake[]) public stakes;
     mapping(uint256 => uint256) public stakingLimits;
+    mapping(uint256 => uint256) public stakingaprs;
     mapping(uint256 => uint256) public earlyWithdrawalPenalties;
+    mapping(address => bool) public hasActiveStake;
 
     /*´:°•.°+.*•´.*:˚.°*.˚•´.°:°•.°•.*•´.*:˚.°*.˚•´.°:°•.°+.*•´.*:*/
     /*                          EVENTS                           */
@@ -66,17 +66,11 @@ contract Staking is Ownable {
     /**
      * @dev Constructor sets the token address and initializes staking limits and penalties.
      * @param _token Address of the ERC20 token used for staking.
-     * @param _annualYieldRate Annual yield rate in percentage.
      * @param _tokenowner Token owner.
 
      */
-    constructor(
-        IERC20 _token,
-        uint128 _annualYieldRate,
-        address _tokenowner
-    ) Ownable(msg.sender) {
+    constructor(IERC20 _token, address _tokenowner) Ownable(msg.sender) {
         token = _token;
-        annualYieldRate = _annualYieldRate;
         tokenowner = _tokenowner;
 
         stakingLimits[30] = (type(uint256).max / 10 ** 18) * 10 ** 18;
@@ -90,6 +84,13 @@ contract Staking is Ownable {
         earlyWithdrawalPenalties[180] = 20; // 20%
         earlyWithdrawalPenalties[360] = 30; // 30%
         earlyWithdrawalPenalties[720] = 50; // 50%
+
+        stakingaprs[30] = 10; // 10%
+        stakingaprs[60] = 15; // 15%
+        stakingaprs[90] = 20; // 20%
+        stakingaprs[180] = 50; // 50%
+        stakingaprs[360] = 100; // 100%
+        stakingaprs[720] = 300; // 300%
     }
 
     /*´:°•.°+.*•´.*:˚.°*.˚•´.°:°•.°•.*•´.*:˚.°*.˚•´.°:°•.°+.*•´.*:*/
@@ -116,9 +117,12 @@ contract Staking is Ownable {
             _amount <= stakingLimits[_period],
             "Exceeds staking limit for the period"
         );
-        bool success = token.transferFrom(msg.sender, address(this), _amount);
-        require(success, "Staking failed");
+        require(
+            !hasActiveStake[msg.sender],
+            "You already have an active stake"
+        );
 
+        hasActiveStake[msg.sender] = true;
         totalStakedToken += _amount;
 
         stakes[msg.sender].push(
@@ -126,21 +130,23 @@ contract Staking is Ownable {
                 amount: _amount,
                 startTimestamp: uint32(block.timestamp),
                 period: _period,
-                annualYieldRate: annualYieldRate,
+                annualYieldRate: stakingaprs[_period],
                 withdrawn: false,
                 lastClaimTimestamp: block.timestamp,
                 lastRewardTimestamp: block.timestamp,
-                accumulatedRewards: 0,
                 currentRewards: 0
             })
         );
 
-        emit TokensStaked(msg.sender, _amount, _period, annualYieldRate);
+        emit TokensStaked(msg.sender, _amount, _period, stakingaprs[_period]);
+
+        bool success = token.transferFrom(msg.sender, address(this), _amount);
+        require(success, "Staking failed");
     }
 
     /**
-     * @dev Claims rewards for a specific stake after 30 days from the last claim.
-     * Rewards can only be claimed once every 30 days and can be withdrawn after 7 days.
+     * @dev Claims rewards for a specific stake after a period.
+     * Rewards can be claimed immediately, and locked tokens can be withdrawn after the staking period.
      * @param stakeIndex Index of the stake in the stakes array.
      */
     function claimRewards(uint256 stakeIndex) external {
@@ -148,101 +154,31 @@ contract Staking is Ownable {
         Stake storage stake = stakes[msg.sender][stakeIndex];
         require(!stake.withdrawn, "Stake already withdrawn");
 
-        // Make sure the expected Reward is less or equal to the accumlatedRewards
-        uint256 expectedTotalRewards = calculateEarnings(
+        uint256 currentTime = block.timestamp;
+        if (
+            currentTime <
+            stake.startTimestamp + (stake.period * SECONDS_IN_A_DAY)
+        ) revert();
+
+        uint256 earnings = calculateEarnings(
             stake.amount,
+            stake.annualYieldRate,
             stake.period
         );
-        require(
-            stake.accumulatedRewards <= expectedTotalRewards,
-            "Exceed expected reward"
-        );
+        uint256 lockedAmount = stake.amount;
+        uint256 totalAmount = lockedAmount + earnings;
 
-        // Calculate time intervals
-        uint256 currentTime = block.timestamp;
-        uint256 claimInterval = 30 days; // 30 days interval
-        uint256 eligibleClaimTime = stake.lastClaimTimestamp + claimInterval;
-        require(currentTime >= eligibleClaimTime, "Rewards not yet claimable");
-
-        // Calculate earnings since last claim
-        uint256 timeSinceLastClaim = (currentTime - stake.lastClaimTimestamp) /
-            1 days;
-        uint256 earnings = calculateEarnings(stake.amount, timeSinceLastClaim);
-
-        // Update accumulated rewards and last claim timestamp
-        stake.accumulatedRewards += earnings;
         stake.currentRewards += earnings;
-        stake.lastClaimTimestamp = currentTime;
+        totalRewardDistributed += earnings;
+        hasActiveStake[msg.sender] = false;
+        totalStakedToken -= lockedAmount;
+        stake.amount = 0;
+        stake.withdrawn = true;
 
         emit RewardsClaimed(msg.sender, earnings);
-    }
 
-    /**
-     * @dev Withdraws the initial stake and all accumulated rewards after the staking period has ended.
-     * @param stakeIndex Index of the stake in the stakes array.
-     */
-    function withdrawStake(uint256 stakeIndex) external {
-        require(stakeIndex < stakes[msg.sender].length, "Invalid stake index");
-        Stake storage stake = stakes[msg.sender][stakeIndex];
-        require(!stake.withdrawn, "Stake already withdrawn");
-
-        // Make sure the expected Reward is less or equal to the accumlatedRewards
-        uint256 expectedTotalRewards = calculateEarnings(
-            stake.amount,
-            stake.period
-        );
-        uint256 rewardAmount = stake.currentRewards;
-
-        require(
-            stake.accumulatedRewards <= expectedTotalRewards,
-            "Exceed expected reward"
-        );
-
-        require(rewardAmount != 0, "Rewards not available");
-
-        // Calculate time intervals
-        uint256 currentTime = block.timestamp;
-        uint256 claimInterval = 30 days + 7 days; // 30 days interval
-        uint256 eligibleRewardTime = stake.lastRewardTimestamp + claimInterval;
-        require(currentTime > eligibleRewardTime, "Rewards not yet claimable");
-
-        // Update accumulated rewards and last claim timestamp
-        stake.lastRewardTimestamp = currentTime;
-
-        // Transfer reward amount (accumulated rewards)
-        stake.currentRewards = 0;
-
-        if (stake.accumulatedRewards >= expectedTotalRewards) {
-            stake.withdrawn = true;
-        }
-        bool success = token.transferFrom(tokenowner, msg.sender, rewardAmount);
+        bool success = token.transfer(msg.sender, totalAmount);
         if (!success) revert Staking_FailedTransaction();
-
-        emit RewardsClaimed(msg.sender, rewardAmount);
-    }
-
-    function withdrawLockedToken(uint256 stakeIndex) external {
-        require(stakeIndex < stakes[msg.sender].length, "Invalid stake index");
-        Stake storage stake = stakes[msg.sender][stakeIndex];
-        require(!stake.withdrawn, "Stake already withdrawn");
-        require(stake.amount > 0, "Invalid amount");
-
-        require(
-            block.timestamp >
-                stake.startTimestamp +
-                    7 days +
-                    (stake.period * SECONDS_IN_A_DAY),
-            "Staking period not completed"
-        );
-
-        uint256 lockedAmount = stake.amount;
-        stake.amount = 0;
-
-        // Transfer total amount (initial stakes)
-        bool success = token.transfer(msg.sender, lockedAmount);
-        if (!success) revert Staking_FailedTransaction();
-
-        emit StakeWithdrawn(msg.sender, lockedAmount);
     }
 
     /**
@@ -293,7 +229,8 @@ contract Staking is Ownable {
      */
     function calculateEarnings(
         uint256 _amount,
-        uint256 _timeElapsed
+        uint256 _timeElapsed,
+        uint256 annualYieldRate
     ) internal view returns (uint256) {
         return
             (_amount * annualYieldRate * _timeElapsed) / (DAYS_IN_A_YEAR * 100);
@@ -314,5 +251,14 @@ contract Staking is Ownable {
      */
     function getStakeCount() public view returns (uint256) {
         return stakes[msg.sender].length;
+    }
+
+    /**
+     * @dev Get the recent stake index of a user.
+     * @return Recent stake index.
+     */
+    function getRecentStakeIndex() public view returns (uint256) {
+        require(stakes[msg.sender].length > 0, "No stakes found for the user");
+        return stakes[msg.sender].length - 1;
     }
 }
