@@ -11,7 +11,6 @@ import Realese from './pages/Release/Realese';
 import Dataset from './pages/Dataset/Dataset';
 import { createWeb3Modal, defaultConfig } from '@web3modal/ethers5/react'
 
-
 // 1. Get projectId
 const projectId = '2201d88239137fd844253f29ee2907e6'
 
@@ -22,6 +21,14 @@ const mainnet = {
   currency: 'ETH',
   explorerUrl: 'https://etherscan.io',
   rpcUrl: 'https://cloudflare-eth.com'
+}
+
+const sepolia = {
+  chainId: 11155111,
+  name: 'Sepolia Testnet',
+  currency: 'SepoliaETH',
+  explorerUrl: ' https://sepolia.etherscan.io',
+  rpcUrl: 'https://sepolia.infura.io/v3/fb8a3fdc580f438f8b2f9f200d9fddc3'
 }
 const bnb = {
   chainId: 56,
@@ -49,14 +56,14 @@ const ethersConfig = defaultConfig({
   /*Optional*/
   enableEIP6963: true, // true by default
   enableInjected: true, // true by default
-  enableCoinbase: true, // true by default
+  enableCoinbase: false, // true by default
  
 })
 
 // 5. Create a Web3Modal instance
 createWeb3Modal({
   ethersConfig,
-  chains: [bnb, bnbtest, mainnet],
+  chains: [bnb, bnbtest, mainnet, sepolia],
   projectId,
   enableAnalytics: true // Optional - defaults to your Cloud configuration
 })

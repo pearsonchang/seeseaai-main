@@ -11,10 +11,13 @@
   },
   "dependencies": {
     "@iconify/react": "^5.0.1",
+    "@web3modal/ethers5": "^5.0.3",
     "aos": "^2.3.4",
+    "ethers": "^5.7.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.23.1",
+    "sonner": "^1.5.0",
     "swiper": "^11.1.4"
   },
   "devDependencies": {

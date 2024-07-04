@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity 0.8.17;
+pragma solidity 0.8.20;
 
 import "@openzeppelin/token/ERC20/IERC20.sol";
 import "@openzeppelin/token/ERC20/utils/SafeERC20.sol";
@@ -76,7 +76,7 @@ contract SeeseaPurchaseToken is Ownable {
         address _priceFeedAddress,
         address _usdc,
         address _usdt
-    ) Ownable() {
+    ) Ownable(msg.sender) {
         bnbUsdPriceFeed = AggregatorV3Interface(_priceFeedAddress);
         seeSeaToken = _token;
 
@@ -128,9 +128,6 @@ contract SeeseaPurchaseToken is Ownable {
         if (amount < USDT_PRICE) revert SeeSeaToken_PriceBelowMinPrice();
 
         uint256 tokensToMint = (amount * SEE_SEA_AI_PRECISION) / USDT_PRICE;
-
-        if (totalPurchase >= tokensToMint)
-            revert SeeSeaToken_PurchaseHasEnded();
 
         if (tokensToMint > seeSeaToken.balanceOf(address(this)))
             revert SeaseaToken_InsufficientFund();

@@ -1,6 +1,6 @@
 // SCH Course Copyright Policy (C): DO-NOT-SHARE-WITH-ANYONE
 // https://smartcontractshacking.com/#copyright-policy
-pragma solidity 0.8.17;
+pragma solidity 0.8.20;
 
 interface IUniswapV2Factory {
     event PairCreated(

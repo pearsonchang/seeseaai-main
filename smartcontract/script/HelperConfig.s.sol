@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity 0.8.17;
+pragma solidity 0.8.20;
 
 import {MockV3Aggregator} from "../test/mocks/MockV3Aggregator.sol";
 import "@openzeppelin/token/ERC20/IERC20.sol";
@@ -17,7 +17,7 @@ contract HelperConfig is Script {
     }
 
     uint8 public constant DECIMALS = 8;
-    int256 public constant BNB_USD_PRICE = 350e8;
+    int256 public constant BNB_USD_PRICE = 550e8;
     uint256 public DEFAULT_ANVIL_KEY =
         0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80;
 
@@ -52,6 +52,11 @@ contract HelperConfig is Script {
 
     function getSepoliaConfig() public returns (NetworkConfig memory) {
         vm.startBroadcast(vm.envUint("PRIVATE_KEY"));
+        MockV3Aggregator bnbUsdPriceFeed = new MockV3Aggregator(
+            DECIMALS,
+            BNB_USD_PRICE
+        );
+
         console.log("sepolia", block.chainid);
 
         DummyERC20 usdt = new DummyERC20(18);
@@ -68,7 +73,7 @@ contract HelperConfig is Script {
 
         return
             NetworkConfig({
-                bnbUsdPriceFeed: 0x2514895c72f50D8bd4B4F9b1110F0D6bD2c97526,
+                bnbUsdPriceFeed: address(bnbUsdPriceFeed),
                 deployerKey: vm.envUint("PRIVATE_KEY"),
                 owner: vm.envAddress("ADMIN_ADDRESS"),
                 usdt: address(usdt),
@@ -104,7 +109,6 @@ contract HelperConfig is Script {
 
     function getOrCreateAnvilBnbConfig() public returns (NetworkConfig memory) {
         vm.startBroadcast();
-        console.log("Fsd", block.chainid);
         MockV3Aggregator bnbUsdPriceFeed = new MockV3Aggregator(
             DECIMALS,
             BNB_USD_PRICE
@@ -123,5 +127,14 @@ contract HelperConfig is Script {
                 usdc: address(usdc)
             });
     }
-    // forge script script/DeploySeesea.s.sol:DeploySeeSeaAI --rpc-url $RPC_URL --etherscan-api-key ETHERSCAN_API_KEY --verify
 }
+// $ forge deploy script/DeploySeesea.s.sol:DeploySeeSeaAI --rpc-url https://bsc-testnet-rpc.publicnode.com --etherscan-api-key FJMHUPUN5FYV67YVZRD555JWQIUIRISQDS --broadcast --verify
+
+// forge script script/DeploySeesea.s.sol:DeploySeeSeaAI \
+//   --rpc-url https://sepolia.infura.io/v3/fb8a3fdc580f438f8b2f9f200d9fddc3 \
+//   --etherscan-api-key CC27HD26UZ64HK9DG7XN84XRSUBWE7B8KX \
+//   --broadcast \
+//   --verify
+
+// forge create --rpc-url https://bsc-testnet-rpc.publicnode.com --etherscan-api-key FJMHUPUN5FYV67YVZRD555JWQIUIRISQDS --chain 97 --private-key 0x5a12d44243f66312894e59dc47d2188b79e31a33b22ab4f365cd9e3bc99339bf script/DeploySeesea.s.sol:DeploySeeSeaAI
+// forge script script/DeploySeesea.s.sol:DeploySeeSeaAI   --rpc-url https://bsc-testnet-rpc.publicnode.com   --etherscan-api-key FJMHUPUN5FYV67YVZRD555JWQIUIRISQDS   --broadcast   --verify

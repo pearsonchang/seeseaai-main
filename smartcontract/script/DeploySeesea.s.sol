@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
 
-pragma solidity 0.8.17;
+pragma solidity 0.8.20;
 
 import "@openzeppelin/token/ERC20/IERC20.sol";
 import {Script} from "forge-std/Script.sol";
@@ -32,6 +32,13 @@ contract DeploySeeSeaAI is Script {
             bnbUsdPriceFeed,
             address(usdt),
             address(usdc)
+        );
+
+        seeseatoken.transfer(address(seeseapurchasetoken), 5_000_000 ether);
+
+        assert(
+            seeseatoken.balanceOf(address(seeseapurchasetoken)) ==
+                5_000_000 ether
         );
 
         Staking staking = new Staking(seeseatoken, 10, owner);

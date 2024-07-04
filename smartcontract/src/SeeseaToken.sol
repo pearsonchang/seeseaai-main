@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity 0.8.17;
+pragma solidity 0.8.20;
 
 import "@openzeppelin/token/ERC20/ERC20.sol";
 import "@openzeppelin/token/ERC20/extensions/ERC20Pausable.sol";
@@ -27,7 +27,9 @@ contract SeeseaToken is ERC20, ERC20Pausable, Ownable {
      * @dev Constructor that initializes the contract with the initial owner and mint tokens to the initial owner
      * @param initialOwner The initial owner of the contract.
      */
-    constructor(address initialOwner) ERC20("Seesea Token", "SSAI") Ownable() {
+    constructor(
+        address initialOwner
+    ) ERC20("Seesea Token", "SSAI") Ownable(msg.sender) {
         transferOwnership(initialOwner);
         _mint(initialOwner, 100_000_000 * 10 ** decimals());
     }
@@ -82,13 +84,13 @@ contract SeeseaToken is ERC20, ERC20Pausable, Ownable {
      * @dev Overrides the ERC20 _transfer function.
      * @param from The address from which tokens are transferred.
      * @param to The address to which tokens are transferred.
-     * @param amount The amount of tokens to transfer.
+     * @param from The address from which tokens are transferred.
      */
-    function _beforeTokenTransfer(
+    function _update(
         address from,
         address to,
-        uint256 amount
-    ) internal override(ERC20, ERC20Pausable) {
-        super._beforeTokenTransfer(from, to, amount);
+        uint256 value
+    ) internal virtual override(ERC20, ERC20Pausable) whenNotPaused {
+        super._update(from, to, value);
     }
 }

@@ -3,7 +3,6 @@ import { useState } from 'react';
 import { btnspan } from '../../assets';
 import WalletModal from '../modal/WalletModal';
 import { useWeb3Modal, useWeb3ModalAccount } from '@web3modal/ethers5/react';
-
 const ConnectWallet = ({ className, imgClassName }) => {
   const { open, close } = useWeb3Modal();
   const { address, isConnected } = useWeb3ModalAccount();
