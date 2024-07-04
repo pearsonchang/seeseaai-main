@@ -19,8 +19,8 @@ import {
 import { ethers } from 'ethers';
 import { toast } from 'sonner';
 
-import SeeseaPurchaseContractFile from '../../../../../smartcontract/out/SeeseaPurchaseToken.sol/SeeseaPurchaseToken.json';
-import usdcContractFile from '../../../../../smartcontract/out/DummyERC20.sol/DummyERC20.json';
+import SeeseaPurchaseContractFile from '../../../abis/SeeseaPurchaseToken.sol/SeeseaPurchaseToken.json';
+import usdcContractFile from '../../../abis/DummyERC20.sol/DummyERC20.json';
 const SeeseaPurchaseContractAddress =
   '0xb65894Bfe2eaee44d72c477728221900cd2a2D8B';
 const SeeseaPurchaseContractAbi = SeeseaPurchaseContractFile.abi;

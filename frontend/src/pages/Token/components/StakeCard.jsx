@@ -11,8 +11,8 @@ import {
 import { ethers } from 'ethers';
 import { toast } from 'sonner';
 
-import StakingContractFile from '../../../../../smartcontract/out/Staking.sol/StakingContract.json';
-import SeeseaTokenContractFile from '../../../../../smartcontract/out/SeeseaToken.sol/SeeseaToken.json';
+import StakingContractFile from '../../../abis/Staking.sol/StakingContract.json';
+import SeeseaTokenContractFile from '../../../abis/SeeseaToken.sol/SeeseaToken.json';
 const StakingContractAddress = '0x499Eb46EF0c1A7Baf7Cf9C25Ba109E4e8091fCf8';
 const SeeseaTokenContractAddress = '0x1157d6Fe108924D91f761Bc8367d25Cf599CFa01';
 const StakingContractAbi = StakingContractFile.abi;

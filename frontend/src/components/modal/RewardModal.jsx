@@ -8,8 +8,8 @@ import {
   useWeb3ModalProvider,
 } from '@web3modal/ethers5/react';
 import { ethers } from 'ethers';
-import StakingContractFile from '../../../.././smartcontract/out/Staking.sol/Staking.json';
-import SeeseaTokenContractFile from '../../../../smartcontract/out/SeeseaToken.sol/SeeseaToken.json';
+import StakingContractFile from '../../../abis/Staking.sol/Staking.json';
+import SeeseaTokenContractFile from '../../../abis/SeeseaToken.sol/SeeseaToken.json';
 const StakingContractAddress = '0x499Eb46EF0c1A7Baf7Cf9C25Ba109E4e8091fCf8';
 const SeeseaTokenContractAddress = '0xb65894Bfe2eaee44d72c477728221900cd2a2D8B';
 const StakingContractAbi = StakingContractFile.abi;
