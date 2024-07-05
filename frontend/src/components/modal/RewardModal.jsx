@@ -8,6 +8,8 @@ import {
   useWeb3ModalProvider,
 } from '@web3modal/ethers5/react';
 import { ethers } from 'ethers';
+import { toast } from 'sonner';
+
 import StakingContractFile from '../../abis/Staking.sol/Staking.json';
 import SeeseaTokenContractFile from '../../abis/SeeseaToken.sol/SeeseaToken.json';
 const StakingContractAddress = '0x499Eb46EF0c1A7Baf7Cf9C25Ba109E4e8091fCf8';
@@ -33,32 +35,23 @@ const RewardModal = ({ onclose }) => {
       onclose();
     }
   };
+
   const handleClaim = async (event) => {
     event.preventDefault();
     try {
-      await claimToken();
-      console.log('Claiming successful:', amount, period);
-      // Handle successful purchase, e.g., show a success message
-    } catch (error) {
-      console.error('Contract interaction failed:', error);
+      if (!isConnected) toast.error('User disconnected');
+      const tx = await StakingContract.claimRewards(0);
+      await tx.wait();
+      let receipt = await tx.wait();
 
-      // Handle specific error codes
-      if (error.code === ethers.errors.UNPREDICTABLE_GAS_LIMIT) {
-        console.error(
-          'Unpredictable gas limit. Transaction may fail or may require a manual gas limit.'
-        );
-      } else if (error.code === ethers.errors.CALL_EXCEPTION) {
-        console.error('Call exception. Transaction failed.');
-      } else {
-        console.error('An unknown error occurred.');
+      if (receipt.status === 1) {
+        toast.success(`Transaction Successful`);
       }
+    } catch (error) {
+      toast.error(`Transaction failed: ${error.error.message}`);
+      // Handle specific error codes
     }
   };
-  async function claimToken() {
-    if (!isConnected) throw Error('User disconnected');
-    const tx = await StakingContract.stakeTokens(0);
-    await tx.wait();
-  }
   useEffect(() => {
     if (isConnected) {
       const ethersProvider = new ethers.providers.Web3Provider(walletProvider);
@@ -153,8 +146,7 @@ const RewardModal = ({ onclose }) => {
           </div>
           <div className="py-10 md:px-20 px-10 text-slate-300">
             <p className="flex justify-between items-center mb-3 font-bold">
-              <span className="font-normal underline">Your shares</span>
-              {accumulatedRewards !== null ? `${accumulatedRewards}` : '0'}
+              <span className="font-normal underline">Expected Rewards</span>0
             </p>
             <p className="flex justify-between items-center mb-3 font-bold">
               <span className="font-normal underline">Next distribution</span>in
@@ -169,12 +161,12 @@ const RewardModal = ({ onclose }) => {
               {APR !== null ? `${APR}%` : '10'}
             </p>
             <p className="font-bold mb-3">SSAI POOL</p>
-            <p className="flex justify-between items-center mb-3  ">
-              <span className="font-normal underline">Reward amount</span>
+            <p className="font-bold flex justify-between items-center mb-3 ">
+              <span className="font-bold font-normal underline">
+                Available for claiming
+              </span>
               {currentRewards !== null ? `${currentRewards}SSAI` : '0'}
             </p>
-            <p className="font-bold mb-3">REVENUE SHARING</p>
-            <p className="font-bold mb-3">TOTAL</p>
           </div>
         </div>
         <div className="flex justify-between mt-10 items-center">

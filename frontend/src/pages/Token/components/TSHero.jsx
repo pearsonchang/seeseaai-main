@@ -33,10 +33,6 @@ const TSHero = () => {
         </p>
         <div className='mt-10'>
           <StakeCard />
-          <StakeCard />
-          <StakeCard />
-          <StakeCard />
-          <StakeCard />
         </div>
         <div className='my-16'>
           <h2
@@ -53,11 +49,11 @@ const TSHero = () => {
               <div className='flex md:flex-row flex-col md:gap-44 gap-10'>
                 <div>
                   <p className='font-semibold text-2xl'>Total Distributed</p>
-                  <p className='text-slate-300 text-xl'>27587.7 CAKE</p>
+                  <p className='text-slate-300 text-xl'>27587.7 SSAI</p>
                 </div>
                 <ul className='font-semibold text-xl list-disc md:pl-0 pl-6'>
                   <li>Monthly revenue sharing</li>
-                  <li>Monthly CAKE pool rewards</li>
+                  <li>Monthly SSAI pool rewards</li>
                 </ul>
               </div>
               <div className='flex mt-6 md:-ml-20 justify-center items-center'>

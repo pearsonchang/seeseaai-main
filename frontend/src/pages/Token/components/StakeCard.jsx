@@ -44,54 +44,29 @@ const StakeCard = () => {
     event.preventDefault();
     const amount = val;
     const period = selectedPurpose;
-
+    if (!isConnected) throw Error('User disconnected');
     try {
-      await stakeToken(amount, period);
-      // Handle successful purchase, e.g., show a success message
-    } catch (error) {
-      console.error('Contract interaction failed:', error);
-
-      // Handle specific error codes
-      if (error.code === ethers.errors.UNPREDICTABLE_GAS_LIMIT) {
-        toast.error(
-          'Unpredictable gas limit. Transaction may fail or may require a manual gas limit.'
-        );
-        // console.error('Unpredictable gas limit. Transaction may fail or may require a manual gas limit.');
-      } else if (error.code === ethers.errors.CALL_EXCEPTION) {
-        // console.error('Call exception. Transaction failed.');
-        toast.error('Call exception. Transaction failed');
+      const _amount = ethers.utils.parseUnits(amount, 'ether');
+      if (_amount == 0) {
+        toast.error(`Transaction failed: Amount Cannot be zero`);
       } else {
-        toast.error('Transaction failed');
-        // console.error('An unknown error occurred.');
+        const approveTx = await SeeseaTokenContract.approve(
+          StakingContractAddress,
+          _amount
+        );
+
+        await approveTx.wait();
+
+        const tx = await StakingContract.stakeTokens(_amount, period);
+        let receipt = await tx.wait();
+        if (receipt.status === 1) {
+          toast.success(`Staking successful for ${period} days`);
+        }
       }
+    } catch (error) {
+      toast.error(`Transaction failed: ${error.error.message}`);
     }
   };
-  async function stakeToken(amount, period) {
-    if (!isConnected) throw Error('User disconnected');
-    // const ethersProvider = new ethers.providers.Web3Provider(walletProvider)
-    // const signer =  ethersProvider.getSigner()
-
-    //   // The Contract object
-    //   const StakingContract = new ethers.Contract(StakingContractAddress,StakingContractAbi, signer)
-    //   const SeeseaPurchaseContract = new ethers.Contract(SeeseaTokenContractAddress,SeeseaTokenContractAbi, signer)
-
-    const _amount = ethers.utils.parseUnits(amount, 'ether');
-    const approveTx = await SeeseaTokenContract.approve(
-      StakingContractAddress,
-      _amount
-    );
-    await approveTx.wait();
-
-    const tx = await StakingContract.stakeTokens(_amount, period);
-    let receipt = await tx.wait();
-
-    if (receipt.status === 1) {
-      toast.success(`Staking successful for ${period} days`);
-    } else {
-      toast.error('Transaction failed');
-      // console.error('Transaction failed:', receipt);
-    }
-  }
   useEffect(() => {
     if (isConnected) {
       const ethersProvider = new ethers.providers.Web3Provider(walletProvider);
@@ -202,19 +177,33 @@ const StakeCard = () => {
               className="w-5 h-5"
               onClick={handleStakeModalClick}
             />
-            <p className="text-[12px] text-slate-300">APR: 0.8%~0.10%</p>
+            <p className="text-[12px] text-slate-300">
+              APR:{' '}
+              {selectedPurpose === '30'
+                ? '8%~10%'
+                : selectedPurpose === '60'
+                ? '13%~15%'
+                : selectedPurpose === '90'
+                ? '18%~20%'
+                : selectedPurpose === '180'
+                ? '48%~50%'
+                : selectedPurpose === '360'
+                ? '98%~100%'
+                : selectedPurpose === '720'
+                ? '298%~300%'
+                : null}{' '}
+            </p>
           </div>
         </div>
         {isConnected ? (
           <div className="lg:w-[20%] w-full lg:mb-0 mb-9 lg:text-center">
             <p className="font-semibold text-xl mb-1">Total Staked:</p>
             <p className="font[300] text-slate-200">
-              {' '}
-              {totalStaked !== null ? `${totalStaked} SSAI` : 'Loading...'}
+              {totalStaked !== null ? `${totalStaked}SSAI` : 'Loading ...'}
             </p>
             <p className="text-slate-300 font-[200]">
-              {' '}
-              {totalStaked !== null ? `~$${totalStaked * 0.05} ` : 'Loading...'}
+              ~{' '}
+              {totalStaked !== null ? `$${totalStaked * 0.05}` : 'Loading ...'}
             </p>
           </div>
         ) : null}

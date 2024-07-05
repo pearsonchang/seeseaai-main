@@ -1,16 +1,16 @@
 /* eslint-disable react/prop-types */
-import { dscard } from '../../../assets';
 import Icons from '../../../components/Icon/Icon';
 
-const DSCards = ({ code_name, description, arrays }) => {
+const DSCards = ({ code_name, description, arrays, image }) => {
   return (
     <div className='px-5 md:px-20 mb-6 '>
       <div
         className='bg-[#FFFFFF1A] flex items-start flex-col md:flex-row gap-5 p-5'
-        // data-aos='zoom-in'
-        // data-aos-duration='1500'
+        data-aos='zoom-in'
+        data-aos-duration='1500'
       >
-        <img src={dscard} className='rounded-xl' />
+        {/* <img src={dscard} className='rounded-xl  ' /> */}
+        <img src={image} className='rounded-xl w-16 h-16' />
         <div className='w-full text-slate-300'>
           <div className='flex flex-col lg:flex-row justify-between w-full lg:items-center mb-3'>
             <p className='text-slate-300 flex items-center gap-2 font-[300]'>

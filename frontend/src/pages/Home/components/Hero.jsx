@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { HHero, btnspan, staking } from '../../../assets';
+import { HHero, btnspan, staking, purchase } from '../../../assets';
 import 'swiper/css';
 import 'swiper/css/free-mode';
 import 'swiper/css/pagination';
@@ -121,13 +121,13 @@ const Hero = () => {
               <img src={staking} className='w-full' />
             </SwiperSlide>
             <SwiperSlide>
-              <img src={staking} className='w-full' />
+              <img src={purchase} className='w-full' />
             </SwiperSlide>
             <SwiperSlide>
               <img src={staking} className='w-full' />
             </SwiperSlide>
             <SwiperSlide>
-              <img src={staking} className='w-full' />
+              <img src={purchase} className='w-full' />
             </SwiperSlide>
             ...
           </Swiper>
