@@ -13,6 +13,10 @@ contract Staking is Ownable {
     /*                          ERRORS                           */
     /*.•°:°.´+˚.*°.˚:*.´•*.+°.•°:´*.´•*.•°.•°:°.´:•˚°.*°.˚:*.´+°.•*/
     error Staking_FailedTransaction();
+    error Staking_AmountCannotBeZero();
+    error Staking_StakingNotOver();
+    error Staking_InvalidStakeIndex();
+    error Staking_StakingNotWithdrawable();
 
     /*´:°•.°+.*•´.*:˚.°*.˚•´.°:°•.°•.*•´.*:˚.°*.˚•´.°:°•.°+.*•´.*:*/
     /*                          STORAGE                           */
@@ -104,7 +108,7 @@ contract Staking is Ownable {
      * @param _period Staking period in days.
      */
     function stakeTokens(uint256 _amount, uint256 _period) external {
-        require(_amount > 0, "Amount must be greater than 0");
+        if (_amount == 0) revert Staking_AmountCannotBeZero();
         require(
             _period == 30 ||
                 _period == 60 ||
@@ -151,7 +155,7 @@ contract Staking is Ownable {
         emit TokensStaked(msg.sender, _amount, _period, stakingaprs[_period]);
 
         bool success = token.transferFrom(msg.sender, address(this), _amount);
-        require(success, "Staking failed");
+        if (!success) revert Staking_FailedTransaction();
     }
 
     /**
@@ -160,15 +164,16 @@ contract Staking is Ownable {
      * @param stakeIndex Index of the stake in the stakes array.
      */
     function claimRewards(uint256 stakeIndex) external {
-        require(stakeIndex < stakes[msg.sender].length, "Invalid stake index");
+        if (stakeIndex >= stakes[msg.sender].length)
+            revert Staking_InvalidStakeIndex();
         Stake storage stake = stakes[msg.sender][stakeIndex];
-        require(!stake.withdrawn, "Stake already withdrawn");
+        if (stake.withdrawn) revert Staking_StakingNotWithdrawable();
 
         uint256 currentTime = block.timestamp;
         if (
             currentTime <
             stake.startTimestamp + (stake.period * SECONDS_IN_A_DAY)
-        ) revert();
+        ) revert Staking_StakingNotOver();
 
         uint256 earnings = calculateEarnings(
             stake.amount,
@@ -196,9 +201,10 @@ contract Staking is Ownable {
      * @param stakeIndex Index of the stake in the stakes array.
      */
     function earlyWithdrawal(uint256 stakeIndex) private {
-        require(stakeIndex < stakes[msg.sender].length, "Invalid stake index");
+        if (stakeIndex >= stakes[msg.sender].length)
+            revert Staking_InvalidStakeIndex();
         Stake storage stake = stakes[msg.sender][stakeIndex];
-        require(!stake.withdrawn, "Already withdrawn");
+        if (stake.withdrawn) revert Staking_StakingNotWithdrawable();
 
         uint256 penaltyRate = earlyWithdrawalPenalties[stake.period];
         uint256 penalty = (stake.amount * penaltyRate) / 100;
@@ -221,7 +227,7 @@ contract Staking is Ownable {
         uint256 _amount,
         uint256 stakeIndex
     ) external onlyOwner {
-        require(_amount > 0, "Amount must be greater than 0");
+        if (_amount == 0) revert Staking_AmountCannotBeZero();
         Stake storage stake = stakes[_user][stakeIndex];
         uint256 newamount = stake.amount - _amount;
         uint256 newexpectedEarning = calculateEarnings(
