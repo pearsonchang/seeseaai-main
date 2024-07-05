@@ -214,12 +214,12 @@ const Navbar = () => {
     setMobileMenuOpen(!isMobileMenuOpen);
   };
 
-  const activeColor = '#002B5E';
+  const activeColor = '#0079D0';
 
   const activeLinkStyle = {
     color: activeColor,
     textDecoration: 'none',
-    borderBottom: '3px solid  #002B5E ',
+    borderBottom: '3px solid  #0079D0 ',
     paddingBottom: '5px',
     marginBottom: '-2px',
   };
@@ -296,24 +296,12 @@ const Navbar = () => {
           {modalOpen && <ComingSoon onclose={closeComingSoonModal} />}
           <input type='checkbox' onChange={toggleMobileMenu} />
           <div className={styles.hamburgerLines}>
-            <span
-              className={`bg-white ${styles.line} ${styles.line1} ${
-                scrolling ? 'bg-green-600' : ''
-              }`}
-            ></span>
-            <span
-              className={`bg-white ${styles.line} ${styles.line2} ${
-                scrolling ? 'bg-green-600' : ''
-              }`}
-            ></span>
-            <span
-              className={`bg-white ${styles.line} ${styles.line3} ${
-                scrolling ? 'bg-green-600' : ''
-              }`}
-            ></span>
+            <span className={`bg-white ${styles.line} ${styles.line1} `}></span>
+            <span className={`bg-white ${styles.line} ${styles.line2} `}></span>
+            <span className={`bg-white ${styles.line} ${styles.line3} `}></span>
           </div>
           <ul
-            className={`hidden xl:flex  text-base font-thin ${styles.menuItems} `}
+            className={`hidden xl:flex bg-[#000b30]  text-base font-thin ${styles.menuItems} `}
           >
             <li>
               <p onClick={() => setSelected('publish')}>Publish</p>

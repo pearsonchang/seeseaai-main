@@ -146,7 +146,7 @@ const StakeModal = ({ onclose }) => {
               APR <span>1%</span>
             </p>
             <p className='flex justify-between mb-5'>
-              LOCKED CAKE BOOST<span>1.1x</span>
+              LOCKED SSAI BOOST<span>1.1x</span>
             </p>
             <p className='flex justify-between mb-5'>
               STAKE PERIOD ENDS <span>Jun 13, 2024 14:00</span>

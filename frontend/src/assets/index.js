@@ -33,6 +33,10 @@ import dscard from './dscard.png';
 import whitepaper from './SeeSeaAI-Whitre Paper.pdf';
 import usdc from './usdc.webp';
 import usdt from './usdt.png';
+import purchase from './purchase.png';
+import heat from './heat-load.png';
+import medical from './medical-imaging.png';
+import traffic from './traffic-flow.png';
 
 export {
   Logo,
@@ -70,4 +74,8 @@ export {
   whitepaper,
   usdc,
   usdt,
+  purchase,
+  heat,
+  medical,
+  traffic,
 };

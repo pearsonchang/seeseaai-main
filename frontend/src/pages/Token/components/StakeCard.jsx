@@ -43,11 +43,11 @@ const StakeCard = () => {
             </button>{' '}
             <button
               className={`rounded-md  lg:w-fit w-full  p-1 px-3 text-sm text-gray6 ${
-                selectedPurpose === '180d'
+                selectedPurpose === '60d'
                   ? 'bg-hbtn text-white '
                   : 'bg-transparent border border-slate-300 text-slate-300'
               }`}
-              onClick={() => handleSelect('180d')}
+              onClick={() => handleSelect('60d')}
             >
               60D
             </button>
@@ -101,12 +101,27 @@ const StakeCard = () => {
               className='w-5 h-5'
               onClick={handleStakeModalClick}
             />
-            <p className='text-[12px] text-slate-300'>APR: 0.11%~0.19%</p>
+            <p className='text-[12px] text-slate-300'>
+              APR:{' '}
+              {selectedPurpose === '30d'
+                ? '8%~10%'
+                : selectedPurpose === '60d'
+                ? '13%~15%'
+                : selectedPurpose === '90d'
+                ? '18%~20%'
+                : selectedPurpose === '180d'
+                ? '48%~50%'
+                : selectedPurpose === '360d'
+                ? '98%~100%'
+                : selectedPurpose === '720d'
+                ? '298%~300%'
+                : null}{' '}
+            </p>
           </div>
         </div>
         <div className='lg:w-[20%] w-full lg:mb-0 mb-9 lg:text-center'>
           <p className='font-semibold text-xl mb-1'>Total Staked:</p>
-          <p className='font[300] text-slate-200'>27587.7 CAKE</p>
+          <p className='font[300] text-slate-200'>27587.7 SSAI</p>
           <p className='text-slate-300 font-[200]'>~$720000,00USD</p>
         </div>
         <div className='lg:w-[25%] w-full flex flex-col justify-center lg:items-center'>

@@ -1,4 +1,4 @@
-import AllocationTables from './components/Tables';
+import AllocationTables, { AllocationTables2 } from './components/Tables';
 
 const Allocation = () => {
   return (
@@ -12,7 +12,7 @@ const Allocation = () => {
           Unlock allocation chart
         </h2>
         <AllocationTables />
-        <AllocationTables />
+        <AllocationTables2 />
       </div>
     </div>
   );

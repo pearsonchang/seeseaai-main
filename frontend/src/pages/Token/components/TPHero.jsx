@@ -196,7 +196,6 @@ const TPHero = () => {
               className='bg-hbtn hover:ring-2 py-3 mb-5 shadow-btns relative text-center px-14 font-bold md:text-xl rounded-[20px] text-white '
               //   data-aos='zoom-in'
               //   data-aos-duration='1000'
-              // onClick={handleRewardModalClick}
             >
               Buy
             </button>{' '}

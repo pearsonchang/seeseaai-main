@@ -41,9 +41,6 @@ const RewardModal = ({ onclose }) => {
           </div>
           <div className='py-10 md:px-20 px-10 text-slate-300'>
             <p className='flex justify-between items-center mb-3 font-bold'>
-              <span className='font-normal underline'>Your shares</span>0
-            </p>
-            <p className='flex justify-between items-center mb-3 font-bold'>
               <span className='font-normal underline'>Next distribution</span>in
               30 days
             </p>
@@ -57,8 +54,10 @@ const RewardModal = ({ onclose }) => {
             <p className='flex justify-between items-center mb-3  '>
               <span className='font-normal underline'>Reward amount</span>0 SSAI
             </p>
-            <p className='font-bold mb-3'>REVENUE SHARING</p>
             <p className='font-bold mb-3'>TOTAL</p>
+            <p className='font-normal text-gray-500 mb-3'>
+              Available for claiming
+            </p>
           </div>
         </div>
         <div className='flex justify-between mt-10 items-center'>
