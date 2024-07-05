@@ -2,6 +2,7 @@
 pragma solidity 0.8.20;
 import "@openzeppelin/access/Ownable.sol";
 import {IERC20} from "@openzeppelin/token/ERC20/IERC20.sol";
+import {Test, console} from "forge-std/Test.sol";
 
 /**
  * @title StakingContract
@@ -32,7 +33,8 @@ contract Staking is Ownable {
         uint256 annualYieldRate;
         bool withdrawn;
         uint256 lastClaimTimestamp;
-        uint256 lastRewardTimestamp;
+        uint256 expectedRewardTimestamp;
+        uint256 expectedRewards;
         uint256 currentRewards;
     }
 
@@ -125,6 +127,13 @@ contract Staking is Ownable {
         hasActiveStake[msg.sender] = true;
         totalStakedToken += _amount;
 
+        uint256 _expectedRewards = calculateEarnings(
+            _amount,
+            stakingaprs[_period],
+            _period
+        );
+        uint256 _expectedRewardTimestamp = block.timestamp +
+            (_period * SECONDS_IN_A_DAY);
         stakes[msg.sender].push(
             Stake({
                 amount: _amount,
@@ -133,8 +142,9 @@ contract Staking is Ownable {
                 annualYieldRate: stakingaprs[_period],
                 withdrawn: false,
                 lastClaimTimestamp: block.timestamp,
-                lastRewardTimestamp: block.timestamp,
-                currentRewards: 0
+                expectedRewardTimestamp: _expectedRewardTimestamp,
+                currentRewards: 0,
+                expectedRewards: _expectedRewards
             })
         );
 
@@ -213,8 +223,16 @@ contract Staking is Ownable {
     ) external onlyOwner {
         require(_amount > 0, "Amount must be greater than 0");
         Stake storage stake = stakes[_user][stakeIndex];
+        uint256 newamount = stake.amount - _amount;
+        uint256 newexpectedEarning = calculateEarnings(
+            newamount,
+            stake.annualYieldRate,
+            stake.period
+        );
+
         stake.amount -= _amount;
         totalStakedToken -= _amount;
+        stake.expectedRewards = newexpectedEarning;
         emit TokensBurned(_user, _amount);
     }
 
@@ -231,7 +249,7 @@ contract Staking is Ownable {
         uint256 _amount,
         uint256 _timeElapsed,
         uint256 annualYieldRate
-    ) internal view returns (uint256) {
+    ) internal pure returns (uint256) {
         return
             (_amount * annualYieldRate * _timeElapsed) / (DAYS_IN_A_YEAR * 100);
     }

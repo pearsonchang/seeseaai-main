@@ -107,6 +107,7 @@ contract StakingTest is Test {
         vm.startPrank(address(tokenowner));
         staking.burnTokens(userOne, 10 ether, 0);
         vm.stopPrank();
+
         vm.startPrank(userOne);
         Staking.Stake memory stake = staking.getStake(0);
         assert(stake.amount == 0);
