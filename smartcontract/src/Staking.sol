@@ -23,7 +23,7 @@ contract Staking is Ownable {
     /*.•°:°.´+˚.*°.˚:*.´•*.+°.•°:´*.´•*.•°.•°:°.´:•˚°.*°.˚:*.´+°.•*/
     IERC20 public token;
     uint32 constant SECONDS_IN_A_DAY = 86400;
-    uint16 constant DAYS_IN_A_YEAR = 365;
+    uint16 constant DAYS_IN_A_YEAR = 360;
 
     uint256 public totalStakedToken;
     uint256 public totalRewardDistributed;

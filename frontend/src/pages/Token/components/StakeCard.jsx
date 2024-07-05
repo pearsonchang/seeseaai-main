@@ -13,8 +13,8 @@ import { toast } from 'sonner';
 
 import StakingContractFile from '../../../abis/Staking.sol/StakingContract.json';
 import SeeseaTokenContractFile from '../../../abis/SeeseaToken.sol/SeeseaToken.json';
-const StakingContractAddress = '0x499Eb46EF0c1A7Baf7Cf9C25Ba109E4e8091fCf8';
-const SeeseaTokenContractAddress = '0x1157d6Fe108924D91f761Bc8367d25Cf599CFa01';
+const StakingContractAddress = '0x41B75be85C34712127F021911F8F0F380654d050';
+const SeeseaTokenContractAddress = '0xf9EED4cB3CC585038c1BDf0608bD6da00B0Ce686';
 const StakingContractAbi = StakingContractFile.abi;
 const SeeseaTokenContractAbi = SeeseaTokenContractFile.abi;
 

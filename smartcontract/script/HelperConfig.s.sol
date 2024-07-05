@@ -137,4 +137,4 @@ contract HelperConfig is Script {
 //   --verify
 
 // forge create --rpc-url https://bsc-testnet-rpc.publicnode.com --etherscan-api-key FJMHUPUN5FYV67YVZRD555JWQIUIRISQDS --chain 97 --private-key 0x5a12d44243f66312894e59dc47d2188b79e31a33b22ab4f365cd9e3bc99339bf script/DeploySeesea.s.sol:DeploySeeSeaAI
-// forge script script/DeploySeesea.s.sol:DeploySeeSeaAI   --rpc-url https://bsc-testnet-rpc.publicnode.com   --etherscan-api-key FJMHUPUN5FYV67YVZRD555JWQIUIRISQDS   --broadcast   --verify
+// forge script script/DeploySeesea.s.sol:DeploySeeSeaAI   --rpc-url https://sepolia.infura.io/v3/fb8a3fdc580f438f8b2f9f200d9fddc3   --etherscan-api-key CC27HD26UZ64HK9DG7XN84XRSUBWE7B8KX   --broadcast   --verify

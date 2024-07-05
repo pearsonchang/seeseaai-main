@@ -12,8 +12,8 @@ import { toast } from 'sonner';
 
 import StakingContractFile from '../../abis/Staking.sol/Staking.json';
 import SeeseaTokenContractFile from '../../abis/SeeseaToken.sol/SeeseaToken.json';
-const StakingContractAddress = '0x499Eb46EF0c1A7Baf7Cf9C25Ba109E4e8091fCf8';
-const SeeseaTokenContractAddress = '0xb65894Bfe2eaee44d72c477728221900cd2a2D8B';
+const StakingContractAddress = '0x41B75be85C34712127F021911F8F0F380654d050';
+const SeeseaTokenContractAddress = '0xf9EED4cB3CC585038c1BDf0608bD6da00B0Ce686';
 const StakingContractAbi = StakingContractFile.abi;
 const SeeseaTokenContractAbi = SeeseaTokenContractFile.abi;
 
@@ -25,9 +25,11 @@ const RewardModal = ({ onclose }) => {
   const [totalStaked, setTotalStaked] = useState(null);
   const [stake, setStake] = useState(null);
   const [claimTimestamp, setClaimTimestamp] = useState(null);
+  const [nextClaimTimestamp, setNextClaimTimestamp] = useState(null);
   const [amountStaked, setAmountStaked] = useState(null);
   const [APR, setAPR] = useState(null);
   const [currentRewards, setcurrentRewards] = useState(null);
+  const [expectedRewards, setexpectedRewards] = useState(null);
   const [accumulatedRewards, setaccumulatedRewards] = useState(null);
 
   const handleModalOverlayClick = (e) => {
@@ -40,6 +42,7 @@ const RewardModal = ({ onclose }) => {
     event.preventDefault();
     try {
       if (!isConnected) toast.error('User disconnected');
+      // const index = await StakingContract.getRecentStakeIndex();
       const tx = await StakingContract.claimRewards(0);
       await tx.wait();
       let receipt = await tx.wait();
@@ -82,11 +85,24 @@ const RewardModal = ({ onclose }) => {
           const aprstate = stakeState.annualYieldRate;
           const accumulatedRewardsState = stakeState.accumulatedRewards;
           const currentRewardsState = stakeState.currentRewards;
+          const expectedRewardsState = ethers.utils.formatUnits(
+            stakeState.expectedRewards,
+            18
+          );
 
           // Convert the timestamp to a human-readable date
           const date = new Date(stakeState.lastClaimTimestamp * 1000);
+          const nextdate = new Date(stakeState.expectedRewardTimestamp * 1000);
+
           // Convert seconds to milliseconds
           const getLastClaimTimestampState = date.toLocaleString('en-US', {
+            year: 'numeric',
+            month: 'short',
+            day: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit',
+          });
+          const getNextClaimTimestampState = nextdate.toLocaleString('en-US', {
             year: 'numeric',
             month: 'short',
             day: 'numeric',
@@ -96,8 +112,10 @@ const RewardModal = ({ onclose }) => {
 
           setaccumulatedRewards(accumulatedRewardsState);
           setcurrentRewards(currentRewardsState);
+          setexpectedRewards(expectedRewardsState);
           setAPR(aprstate);
           setClaimTimestamp(getLastClaimTimestampState);
+          setNextClaimTimestamp(getNextClaimTimestampState);
           setAmountStaked(amountState);
           setTotalStaked(total);
           setStake(stakeState);
@@ -146,19 +164,20 @@ const RewardModal = ({ onclose }) => {
           </div>
           <div className="py-10 md:px-20 px-10 text-slate-300">
             <p className="flex justify-between items-center mb-3 font-bold">
-              <span className="font-normal underline">Expected Rewards</span>0
+              <span className="font-normal underline">Expected Rewards</span>
+              {expectedRewards !== null ? `${expectedRewards}` : '0'}
             </p>
             <p className="flex justify-between items-center mb-3 font-bold">
-              <span className="font-normal underline">Next distribution</span>in
-              30 days
+              <span className="font-normal underline">Next distribution</span>
+              {nextClaimTimestamp !== null ? `${nextClaimTimestamp}` : '0'}
             </p>
             <p className="flex justify-between items-center mb-3 font-bold">
               <span className="font-normal underline">Last distribution</span>
-              {claimTimestamp !== null ? `${claimTimestamp}` : ''}
+              {claimTimestamp !== null ? `${claimTimestamp}` : '0'}
             </p>
             <p className="flex justify-between items-center mb-3  ">
               <span className="font-normal underline">APR</span>
-              {APR !== null ? `${APR}%` : '10'}
+              {APR !== null ? `${APR}%` : '0'}
             </p>
             <p className="font-bold mb-3">SSAI POOL</p>
             <p className="font-bold flex justify-between items-center mb-3 ">

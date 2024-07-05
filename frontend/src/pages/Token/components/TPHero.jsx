@@ -22,10 +22,10 @@ import { toast } from 'sonner';
 import SeeseaPurchaseContractFile from '../../../abis/SeeseaPurchaseToken.sol/SeeseaPurchaseToken.json';
 import usdcContractFile from '../../../abis/DummyERC20.sol/DummyERC20.json';
 const SeeseaPurchaseContractAddress =
-  '0xb65894Bfe2eaee44d72c477728221900cd2a2D8B';
+  '0x2DcD57f2a254a6e5998b3FEEfCbf7fBee344A538';
 const SeeseaPurchaseContractAbi = SeeseaPurchaseContractFile.abi;
-const usdtContractAddress = '0xFaf3960B63ab5a924Aad8870d5E3c78A3813513c';
-const usdcContractAddress = '0xDf12a351D23DEFCa08b2EB2559E2788cF912d613';
+const usdtContractAddress = '0xC2e3b560046047AF83cB15b3A69eD742b4b72B39';
+const usdcContractAddress = '0x938c3e2a75f37d495cd5b84eda8DCC77AFf64B85';
 
 const TPHero = () => {
   const [val, setVal] = useState(0);
@@ -49,6 +49,7 @@ const TPHero = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+
     const amount = val;
     const currency = selectedCurrency;
     if (!isConnected) toast.error('User disconnected');
@@ -106,6 +107,7 @@ const TPHero = () => {
       } else {
         toast.error(`Purchasing with ${currency} is not implemented yet`);
       }
+
       const receipt = await tx.wait();
 
       if (receipt.status === 1) {
@@ -229,7 +231,7 @@ const TPHero = () => {
             />
             {isConnected ? (
               <button
-                onSubmit={handleSubmit}
+                onClick={handleSubmit}
                 className="bg-hbtn hover:ring-2 py-3 mb-5 shadow-btns relative text-center px-14 font-bold md:text-xl rounded-[20px] text-white "
                 //   data-aos='zoom-in'
                 //   data-aos-duration='1000'
