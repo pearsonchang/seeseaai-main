@@ -46,8 +46,11 @@ const bnbtest = {
 };
 
 // 3. Create a metadata object
-const metadata = { name: 'Test' };
-
+const metadata = {
+  name: 'Seeseaai',
+  description: 'SeeseaAI Website',
+  url: 'https://seeseaai-main.vercel.app', // origin must match your domain & subdomain
+};
 // 4. Create Ethers config
 const ethersConfig = defaultConfig({
   /*Required*/

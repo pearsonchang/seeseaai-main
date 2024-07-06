@@ -169,7 +169,8 @@ const RewardModal = ({ onclose }) => {
             </p>
             <p className="flex justify-between items-center mb-3 font-bold">
               <span className="font-normal underline">Next distribution</span>
-              {nextClaimTimestamp !== null ? `${nextClaimTimestamp}` : '0'}
+              30 days
+              {/* {nextClaimTimestamp !== null ? `${nextClaimTimestamp}` : '0'} */}
             </p>
             <p className="flex justify-between items-center mb-3 font-bold">
               <span className="font-normal underline">Last distribution</span>

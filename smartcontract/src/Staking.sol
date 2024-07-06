@@ -17,6 +17,7 @@ contract Staking is Ownable {
     error Staking_StakingNotOver();
     error Staking_InvalidStakeIndex();
     error Staking_StakingNotWithdrawable();
+    error Staking_RewardsCompleted();
 
     /*´:°•.°+.*•´.*:˚.°*.˚•´.°:°•.°•.*•´.*:˚.°*.˚•´.°:°•.°+.*•´.*:*/
     /*                          STORAGE                           */
@@ -39,7 +40,7 @@ contract Staking is Ownable {
         uint256 lastClaimTimestamp;
         uint256 expectedRewardTimestamp;
         uint256 expectedRewards;
-        uint256 currentRewards;
+        uint256 accumulatedRewards;
     }
 
     mapping(address => Stake[]) public stakes;
@@ -147,7 +148,7 @@ contract Staking is Ownable {
                 withdrawn: false,
                 lastClaimTimestamp: block.timestamp,
                 expectedRewardTimestamp: _expectedRewardTimestamp,
-                currentRewards: 0,
+                accumulatedRewards: 0,
                 expectedRewards: _expectedRewards
             })
         );
@@ -167,6 +168,51 @@ contract Staking is Ownable {
         if (stakeIndex >= stakes[msg.sender].length)
             revert Staking_InvalidStakeIndex();
         Stake storage stake = stakes[msg.sender][stakeIndex];
+        uint256 currentTime = block.timestamp;
+
+        if (
+            currentTime >=
+            stake.startTimestamp + (stake.period * SECONDS_IN_A_DAY)
+        ) {
+            _claimTokens(stakeIndex);
+        } else {
+            _claimRewards(stakeIndex);
+        }
+    }
+
+    function _claimRewards(uint256 stakeIndex) internal {
+        if (stakeIndex >= stakes[msg.sender].length)
+            revert Staking_InvalidStakeIndex();
+        Stake storage stake = stakes[msg.sender][stakeIndex];
+        if (stake.withdrawn) revert Staking_StakingNotWithdrawable();
+
+        uint256 currentTime = block.timestamp;
+        if (currentTime < stake.lastClaimTimestamp + 30 days)
+            revert Staking_StakingNotOver();
+
+        uint256 earnings = calculateEarnings(
+            stake.amount,
+            stake.annualYieldRate,
+            30
+        );
+
+        if (stake.accumulatedRewards >= stake.expectedRewards)
+            revert Staking_RewardsCompleted();
+
+        stake.accumulatedRewards += earnings;
+        totalRewardDistributed += earnings;
+        stake.lastClaimTimestamp = block.timestamp;
+
+        emit RewardsClaimed(msg.sender, earnings);
+
+        bool success = token.transfer(msg.sender, earnings);
+        if (!success) revert Staking_FailedTransaction();
+    }
+
+    function _claimTokens(uint256 stakeIndex) internal {
+        if (stakeIndex >= stakes[msg.sender].length)
+            revert Staking_InvalidStakeIndex();
+        Stake storage stake = stakes[msg.sender][stakeIndex];
         if (stake.withdrawn) revert Staking_StakingNotWithdrawable();
 
         uint256 currentTime = block.timestamp;
@@ -175,22 +221,22 @@ contract Staking is Ownable {
             stake.startTimestamp + (stake.period * SECONDS_IN_A_DAY)
         ) revert Staking_StakingNotOver();
 
-        uint256 earnings = calculateEarnings(
-            stake.amount,
-            stake.annualYieldRate,
-            stake.period
-        );
-        uint256 lockedAmount = stake.amount;
-        uint256 totalAmount = lockedAmount + earnings;
+        if (stake.accumulatedRewards >= stake.expectedRewards)
+            revert Staking_RewardsCompleted();
 
-        stake.currentRewards += earnings;
-        totalRewardDistributed += earnings;
-        hasActiveStake[msg.sender] = false;
+        uint256 remainingearning = stake.expectedRewards -
+            stake.accumulatedRewards;
+        uint256 lockedAmount = stake.amount;
+        uint256 totalAmount = lockedAmount + remainingearning;
+
+        stake.accumulatedRewards += remainingearning;
+        totalRewardDistributed += remainingearning;
         totalStakedToken -= lockedAmount;
+        hasActiveStake[msg.sender] = false;
         stake.amount = 0;
         stake.withdrawn = true;
 
-        emit RewardsClaimed(msg.sender, earnings);
+        emit RewardsClaimed(msg.sender, totalAmount);
 
         bool success = token.transfer(msg.sender, totalAmount);
         if (!success) revert Staking_FailedTransaction();
