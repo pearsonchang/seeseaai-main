@@ -110,8 +110,12 @@ const RewardModal = ({ onclose }) => {
             minute: '2-digit',
           });
 
+          // calculate the reward
+          let rewards =
+            (amountState * stakeState.annualYieldRate * 30) / (360 * 100);
+
           setaccumulatedRewards(accumulatedRewardsState);
-          setcurrentRewards(currentRewardsState);
+          setcurrentRewards(rewards);
           setexpectedRewards(expectedRewardsState);
           setAPR(aprstate);
           setClaimTimestamp(getLastClaimTimestampState);
@@ -183,7 +187,7 @@ const RewardModal = ({ onclose }) => {
             <p className="font-bold mb-3">SSAI POOL</p>
             <p className="font-bold flex justify-between items-center mb-3 ">
               <span className="font-bold font-normal underline">
-                Available for claiming
+                Claimable Rewards
               </span>
               {currentRewards !== null ? `${currentRewards}SSAI` : '0'}
             </p>
