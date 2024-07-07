@@ -162,7 +162,7 @@ const StakeCard = () => {
             </button>
             <button
               className={`rounded-md  lg:w-fit w-full  p-1 px-3 text-sm text-gray6 ${
-                selectedPurpose === '720d'
+                selectedPurpose === '720'
                   ? 'bg-hbtn text-white '
                   : 'bg-transparent border border-slate-300 text-slate-300'
               }`}
