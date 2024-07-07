@@ -22,10 +22,10 @@ import { toast } from 'sonner';
 import SeeseaPurchaseContractFile from '../../../abis/SeeseaPurchaseToken.sol/SeeseaPurchaseToken.json';
 import usdcContractFile from '../../../abis/DummyERC20.sol/DummyERC20.json';
 const SeeseaPurchaseContractAddress =
-  '0x2DcD57f2a254a6e5998b3FEEfCbf7fBee344A538';
+  '0xC2e3b560046047AF83cB15b3A69eD742b4b72B39';
 const SeeseaPurchaseContractAbi = SeeseaPurchaseContractFile.abi;
-const usdtContractAddress = '0xC2e3b560046047AF83cB15b3A69eD742b4b72B39';
-const usdcContractAddress = '0x938c3e2a75f37d495cd5b84eda8DCC77AFf64B85';
+const usdtContractAddress = '0x89e78d921678Cb0e7716060494AEba5e3299c01B';
+const usdcContractAddress = '0x450e72Dd025E7396a8E6707D84763f30D0655cEA';
 
 const TPHero = () => {
   const [val, setVal] = useState(0);

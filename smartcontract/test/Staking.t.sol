@@ -94,6 +94,11 @@ contract StakingTest is Test {
         vm.stopPrank();
     }
 
+    function test_calculation() external {
+        uint256 bb = staking.calculateEarnings(200 ether, 90, 20);
+        console.log(bb);
+    }
+
     function test_burntoken() external buyTokens(10) {
         vm.startPrank(userOne);
         seeseatoken.approve(address(staking), 10 ether);
