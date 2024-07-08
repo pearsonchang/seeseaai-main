@@ -5,8 +5,20 @@ import 'swiper/css/free-mode';
 import 'swiper/css/pagination';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { FreeMode, Pagination, Autoplay } from 'swiper/modules';
+import { useState } from 'react';
+import ComingSoon from '../../../components/modal/ComingSoon';
 
 const Hero = () => {
+  const [modalOpen, setModalOpen] = useState(false);
+
+  const handleComingSoonModalClick = () => {
+    setModalOpen(!modalOpen);
+  };
+
+  const closeComingSoonModal = () => {
+    setModalOpen(false);
+  };
+
   return (
     <div className="pt-16">
       <div className="flex justify-between w-full items-center px-5 md:px-20">
@@ -62,6 +74,7 @@ const Hero = () => {
             </Link>
           </button>{' '}
           <button
+            onClick={handleComingSoonModalClick}
             className="bg-hbtn hover:ring-2 py-3 shadow-btns md:w-[70%] w-full rounded-[20px] text-white"
             data-aos="fade-up"
             data-aos-duration="1000"
@@ -69,6 +82,7 @@ const Hero = () => {
             Participation Detail
           </button>
         </div>
+        {modalOpen && <ComingSoon onclose={closeComingSoonModal} />}
       </div>
       <div className="px-5 md:px-20 py-6 flex md:flex-row md:gap-0 gap-10 flex-col-reverse justify-between">
         {' '}
