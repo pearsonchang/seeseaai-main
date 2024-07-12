@@ -189,7 +189,7 @@ const TPHero = () => {
             data-aos="fade-up"
             data-aos-duration="1400"
           >
-            <input className="w-full bg-[#010E35] rounded-[17px] hover:ring-2 outline-none px-6 text-xl font-[300] py-4" />
+            <input className="w-full bg-[#010E35] rounded-[17px] hover:ring-2 outline-none px-6 text-xl font-[300] py-4" disabled/>
             <div className="absolute flex justify-between gap-2 md:gap-5 items-center top-4 md:top-3 left-3">
               <img
                 src={Logo}
