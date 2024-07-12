@@ -1,7 +1,19 @@
 import { Link } from 'react-router-dom';
 import { help } from '../../../assets';
+import { useState } from 'react';
+import ComingSoon from '../../../components/modal/ComingSoon';
 
 const Hero = () => {
+    const [modalOpen, setModalOpen] = useState(false);
+
+  const handleComingSoonModalClick = () => {
+    setModalOpen(!modalOpen);
+  };
+
+  const closeComingSoonModal = () => {
+    setModalOpen(false);
+  };
+
   return (
     <div className="pt-36">
       <div className="px-5 md:px-20">
