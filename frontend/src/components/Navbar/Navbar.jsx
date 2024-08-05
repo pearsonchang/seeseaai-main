@@ -83,25 +83,25 @@ const Navbar = () => {
     switch (item) {
       case 'Publish':
         return (
-          <ul className='list-none flex flex-col'>
+          <ul className="list-none flex flex-col">
             {' '}
             <Link
-              to='/publish'
+              to="/publish"
               onClick={() => {
                 window.scrollTo(0, 0);
               }}
-              className='hover:bg-white hover:text-blue-950'
+              className="hover:bg-white hover:text-blue-950"
             >
-              <li className='  border-b border-slate-500 pb-2 pt-1'>Publish</li>
+              <li className="  border-b border-slate-500 pb-2 pt-1">Publish</li>
             </Link>
             <li
-              className='hover:bg-white hover:text-blue-950 cursor-pointer   border-b border-slate-500 pb-2 pt-1'
+              className="hover:bg-white hover:text-blue-950 cursor-pointer   border-b border-slate-500 pb-2 pt-1"
               onClick={handleComingSoonModalClick}
             >
               How to Release
             </li>
             <li
-              className='hover:bg-white hover:text-blue-950 cursor-pointer  pb-2 pt-1'
+              className="hover:bg-white hover:text-blue-950 cursor-pointer  pb-2 pt-1"
               onClick={handleComingSoonModalClick}
             >
               Auditing Body
@@ -110,42 +110,42 @@ const Navbar = () => {
         );
       case 'Token':
         return (
-          <ul className='list-none flex flex-col '>
+          <ul className="list-none flex flex-col ">
             <Link
-              to='/token-purchase'
+              to="/token-purchase"
               onClick={() => {
                 window.scrollTo(0, 0);
               }}
-              className='hover:bg-white hover:text-blue-950'
+              className="hover:bg-white hover:text-blue-950"
             >
-              <li className='border-b border-slate-500 pb-2 pt-1'>
+              <li className="border-b border-slate-500 pb-2 pt-1">
                 Token purchase
               </li>
             </Link>
             <Link
-              to='/token-staking'
+              to="/token-staking"
               onClick={() => {
                 window.scrollTo(0, 0);
               }}
-              className='hover:bg-white hover:text-blue-950'
+              className="hover:bg-white hover:text-blue-950"
             >
-              <li className='border-b border-slate-500 pt-1 pb-2'>
+              <li className="border-b border-slate-500 pt-1 pb-2">
                 Token staking
               </li>
             </Link>{' '}
             <Link
-              to='/unlock-allocation'
+              to="/unlock-allocation"
               onClick={() => {
                 window.scrollTo(0, 0);
               }}
-              className='hover:bg-white hover:text-blue-950'
+              className="hover:bg-white hover:text-blue-950"
             >
-              <li className='border-b border-slate-500 pt-1 pb-2'>
+              <li className="border-b border-slate-500 pt-1 pb-2">
                 Unlock allocation chart
               </li>
             </Link>
             <li
-              className='hover:bg-white hover:text-blue-950 cursor-pointer  pb-2 pt-1'
+              className="hover:bg-white hover:text-blue-950 cursor-pointer  pb-2 pt-1"
               onClick={handleComingSoonModalClick}
             >
               Functions
@@ -154,26 +154,26 @@ const Navbar = () => {
         );
       case 'Help':
         return (
-          <ul className='list-none flex flex-col'>
+          <ul className="list-none flex flex-col">
             <Link
-              to='/help-center'
+              to="/help-center"
               onClick={() => {
                 window.scrollTo(0, 0);
               }}
-              className='hover:bg-white hover:text-blue-950'
+              className="hover:bg-white hover:text-blue-950"
             >
-              <li className='border-b border-slate-500 pt-1 pb-2'>
+              <li className="border-b border-slate-500 pt-1 pb-2">
                 Help center
               </li>
             </Link>
             <li
-              className='hover:bg-white hover:text-blue-950 cursor-pointer   border-b border-slate-500 pb-2 pt-1'
+              className="hover:bg-white hover:text-blue-950 cursor-pointer   border-b border-slate-500 pb-2 pt-1"
               onClick={handleComingSoonModalClick}
             >
               User guide
             </li>
             <li
-              className='hover:bg-white hover:text-blue-950 cursor-pointer  pb-2 pt-1'
+              className="hover:bg-white hover:text-blue-950 cursor-pointer  pb-2 pt-1"
               onClick={handleDownload}
             >
               White paper
@@ -247,25 +247,29 @@ const Navbar = () => {
         <div
           className={` xl:flex xl:items-center xl:justify-between xl:pl-20  xl:pr-24 xl:py-4  ${styles.navbarContainer}`}
         >
-          <img src={logoSrc} className=' ' />
+          <img
+            src={logoSrc}
+            className=" "
+            onClick={() => handleLinkClick('/')}
+          />
           <div className={`  ${styles.useruser}`}>
             <div className={` relative`}>
               <img
                 src={User}
-                alt='User'
-                className=''
+                alt="User"
+                className=""
                 onMouseEnter={() => handleMouseEnter2()}
                 onMouseLeave={handleMouseLeave2}
               />{' '}
               {dropdown2 && (
                 <div
-                  className='absolute font-normal text-lg top-15  w-[200px] rounded-b-lg right-0 bg-[#002B5E] text-slate-300 text-center py-4 pb-0 shadow-2xl'
+                  className="absolute font-normal text-lg top-15  w-[200px] rounded-b-lg right-0 bg-[#002B5E] text-slate-300 text-center py-4 pb-0 shadow-2xl"
                   onMouseEnter={() => handleMouseEnter2()}
                   onMouseLeave={handleMouseLeave2}
                 >
-                  <ul className='list-none flex flex-col'>
+                  <ul className="list-none flex flex-col">
                     <li
-                      className='hover:bg-white hover:text-blue-950 cursor-pointer   border-b border-slate-500 pb-2 pt-1'
+                      className="hover:bg-white hover:text-blue-950 cursor-pointer   border-b border-slate-500 pb-2 pt-1"
                       onClick={handleComingSoonModalClick}
                       // className='border-b border-slate-500 pb-2 pt-1'
                     >
@@ -273,20 +277,20 @@ const Navbar = () => {
                     </li>
                     {/* </Link> */}
                     <li
-                      className='hover:bg-white hover:text-blue-950 cursor-pointer   border-b border-slate-500 pb-2 pt-1'
+                      className="hover:bg-white hover:text-blue-950 cursor-pointer   border-b border-slate-500 pb-2 pt-1"
                       onClick={handleComingSoonModalClick}
                       // className='border-b border-slate-500 pb-2 pt-1'
                     >
                       Security and Privacy
                     </li>{' '}
                     <Link
-                      to='/my-releases'
+                      to="/my-releases"
                       onClick={() => {
                         window.scrollTo(0, 0);
                       }}
-                      className='hover:bg-white hover:text-blue-950'
+                      className="hover:bg-white hover:text-blue-950"
                     >
-                      <li className='  pt-2 pb-2 '>My releases</li>
+                      <li className="  pt-2 pb-2 ">My releases</li>
                     </Link>{' '}
                   </ul>
                 </div>
@@ -294,7 +298,7 @@ const Navbar = () => {
             </div>
           </div>
           {modalOpen && <ComingSoon onclose={closeComingSoonModal} />}
-          <input type='checkbox' onChange={toggleMobileMenu} />
+          <input type="checkbox" onChange={toggleMobileMenu} />
           <div className={styles.hamburgerLines}>
             <span className={`bg-white ${styles.line} ${styles.line1} `}></span>
             <span className={`bg-white ${styles.line} ${styles.line2} `}></span>
@@ -311,7 +315,7 @@ const Navbar = () => {
                 {' '}
                 <li>
                   <Link
-                    to='/publish'
+                    to="/publish"
                     style={activeItem === 'publish' ? activeLinkStyle : {}}
                     onClick={() => handleLinkClick('/publish')}
                   >
@@ -342,7 +346,7 @@ const Navbar = () => {
                 {' '}
                 <li>
                   <Link
-                    to='/token-purchase'
+                    to="/token-purchase"
                     style={
                       activeItem === 'token-purchase' ? activeLinkStyle : {}
                     }
@@ -353,7 +357,7 @@ const Navbar = () => {
                 </li>
                 <li>
                   <Link
-                    to='/token-staking'
+                    to="/token-staking"
                     style={
                       activeItem === 'token-staking' ? activeLinkStyle : {}
                     }
@@ -364,7 +368,7 @@ const Navbar = () => {
                 </li>
                 <li>
                   <Link
-                    to='/unlock-allocation'
+                    to="/unlock-allocation"
                     style={
                       activeItem === 'unlock-allocation' ? activeLinkStyle : {}
                     }
@@ -385,7 +389,7 @@ const Navbar = () => {
             )}
             <li>
               <Link
-                to='/dataset'
+                to="/dataset"
                 style={activeItem === 'dataset' ? activeLinkStyle : {}}
                 onClick={() => handleLinkClick('/dataset')}
               >
@@ -400,7 +404,7 @@ const Navbar = () => {
                 {' '}
                 <li>
                   <Link
-                    to='/help-center'
+                    to="/help-center"
                     style={activeItem === 'help-center' ? activeLinkStyle : {}}
                     onClick={() => handleLinkClick('/help-center')}
                   >
@@ -422,17 +426,17 @@ const Navbar = () => {
         className={`bg-[#002B5E] top-0 z-50 shadow-btns fixed  w-full pr-5 md:pr-16 ${styles.navbar} lg:block hidden`}
       >
         <div className={`flex justify-between items-center`}>
-          <Link to='/'>
-            <div className='flex items-center gap-4'>
-              <img src={Logo} alt='Logo' />
-              <h3 className='text-white text-2xl'>SeeSeaAI</h3>
+          <Link to="/">
+            <div className="flex items-center gap-4">
+              <img src={Logo} alt="Logo" />
+              <h3 className="text-white text-2xl">SeeSeaAI</h3>
             </div>
           </Link>{' '}
           <ul
             className={`text-white font-[500] text-xl list-none hidden md:flex justify-around w-[40%] `}
           >
             {['Publish', 'Token', 'Dataset', 'Help'].map((item, index) => (
-              <li key={index} className='relative'>
+              <li key={index} className="relative">
                 <div
                   onMouseEnter={() => handleMouseEnter(index)}
                   onMouseLeave={handleMouseLeave}
@@ -440,11 +444,11 @@ const Navbar = () => {
                   {item === 'Dataset' ? (
                     <Link to={`/${item.toLowerCase()}`}>{item}</Link>
                   ) : (
-                    <span className='cursor-pointer'>{item}</span>
+                    <span className="cursor-pointer">{item}</span>
                   )}
                   {dropdown === index && item !== 'Dataset' && (
                     <div
-                      className='absolute font-normal text-lg top-5 mt-2 w-[250px] rounded-b-lg -left-24 bg-[#002B5E] text-slate-300 text-center pt-4 shadow-2xl'
+                      className="absolute font-normal text-lg top-5 mt-2 w-[250px] rounded-b-lg -left-24 bg-[#002B5E] text-slate-300 text-center pt-4 shadow-2xl"
                       onMouseEnter={() => handleMouseEnter(index)}
                       onMouseLeave={handleMouseLeave}
                     >
@@ -456,23 +460,23 @@ const Navbar = () => {
             ))}
           </ul>
           {modalOpen && <ComingSoon onclose={closeComingSoonModal} />}
-          <div className='relatvive'>
+          <div className="relatvive">
             <img
               src={User}
-              alt='User'
-              className=''
+              alt="User"
+              className=""
               onMouseEnter={() => handleMouseEnter2()}
               onMouseLeave={handleMouseLeave2}
             />{' '}
             {dropdown2 && (
               <div
-                className='absolute font-normal text-lg top-15  w-[200px] rounded-b-lg right-0 bg-[#002B5E] text-slate-300 text-center py-4 pb-0 shadow-2xl'
+                className="absolute font-normal text-lg top-15  w-[200px] rounded-b-lg right-0 bg-[#002B5E] text-slate-300 text-center py-4 pb-0 shadow-2xl"
                 onMouseEnter={() => handleMouseEnter2()}
                 onMouseLeave={handleMouseLeave2}
               >
-                <ul className='list-none flex flex-col'>
+                <ul className="list-none flex flex-col">
                   <li
-                    className='hover:bg-white hover:text-blue-950 cursor-pointer   border-b border-slate-500 pb-2 pt-1'
+                    className="hover:bg-white hover:text-blue-950 cursor-pointer   border-b border-slate-500 pb-2 pt-1"
                     onClick={handleComingSoonModalClick}
                     // className='border-b border-slate-500 pb-2 pt-1'
                   >
@@ -480,20 +484,20 @@ const Navbar = () => {
                   </li>
                   {/* </Link> */}
                   <li
-                    className='hover:bg-white hover:text-blue-950 cursor-pointer   border-b border-slate-500 pb-2 pt-1'
+                    className="hover:bg-white hover:text-blue-950 cursor-pointer   border-b border-slate-500 pb-2 pt-1"
                     onClick={handleComingSoonModalClick}
                     // className='border-b border-slate-500 pb-2 pt-1'
                   >
                     Security and Privacy
                   </li>{' '}
                   <Link
-                    to='/my-releases'
+                    to="/my-releases"
                     onClick={() => {
                       window.scrollTo(0, 0);
                     }}
-                    className='hover:bg-white hover:text-blue-950'
+                    className="hover:bg-white hover:text-blue-950"
                   >
-                    <li className='  pt-2 pb-2 '>My releases</li>
+                    <li className="  pt-2 pb-2 ">My releases</li>
                   </Link>{' '}
                 </ul>
               </div>
