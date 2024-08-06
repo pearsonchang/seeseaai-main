@@ -247,11 +247,13 @@ const Navbar = () => {
         <div
           className={` xl:flex xl:items-center xl:justify-between xl:pl-20  xl:pr-24 xl:py-4  ${styles.navbarContainer}`}
         >
-          <img
-            src={logoSrc}
-            className=" "
-            onClick={() => handleLinkClick('/')}
-          />
+          <Link to="/">
+            <img
+              src={logoSrc}
+              className=" "
+              onClick={() => handleLinkClick('/')}
+            />
+          </Link>
           <div className={`  ${styles.useruser}`}>
             <div className={` relative`}>
               <img
