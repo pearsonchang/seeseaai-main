@@ -134,12 +134,15 @@ const TPHero = () => {
         >
           Buy crypto in just a few clicks
         </p>
+        <br />
         <p
           className="text-slate-300 font-[300] text-xl "
           data-aos="fade-up"
           data-aos-duration="1500"
         >
-          SeeseaAI Token Address: 0x0B6b64e404fa4558343D1cd5f958a9Be05a7e73C
+          SeeseaAI Token Address:
+          <br />
+          0x0B6b64e404fa4558343D1cd5f958a9Be05a7e73C
         </p>
         {/* <form onSubmit={handleSubmit}> */}
         <div className="rounded-xl bg-cards1 p-5  md:p-8 mt-10 text-white">
