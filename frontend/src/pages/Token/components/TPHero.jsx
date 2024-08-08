@@ -136,7 +136,7 @@ const TPHero = () => {
         </p>
         <br />
         <p
-          className="text-slate-300 font-[100] text-xl "
+          className="text-slate-300 font-[100]"
           data-aos="fade-up"
           data-aos-duration="1500"
         >
