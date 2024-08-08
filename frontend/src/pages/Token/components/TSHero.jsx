@@ -11,7 +11,7 @@ import { toast } from 'sonner';
 
 import RewardModal from '../../../components/modal/RewardModal';
 import StakingContractFile from '../../../abis/Staking.sol/Staking.json';
-const StakingContractAddress = '0xf9EED4cB3CC585038c1BDf0608bD6da00B0Ce686';
+const StakingContractAddress = '0x18fC4b89769bC3b86E94617EeF331861175e9259';
 const StakingContractAbi = StakingContractFile.abi;
 
 const TSHero = () => {
