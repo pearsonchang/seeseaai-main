@@ -22,10 +22,10 @@ import { toast } from 'sonner';
 import SeeseaPurchaseContractFile from '../../../abis/SeeseaPurchaseToken.sol/SeeseaPurchaseToken.json';
 import usdcContractFile from '../../../abis/DummyERC20.sol/DummyERC20.json';
 const SeeseaPurchaseContractAddress =
-  '0xC2e3b560046047AF83cB15b3A69eD742b4b72B39';
+  '0x0B6b64e404fa4558343D1cd5f958a9Be05a7e73C';
 const SeeseaPurchaseContractAbi = SeeseaPurchaseContractFile.abi;
-const usdtContractAddress = '0x89e78d921678Cb0e7716060494AEba5e3299c01B';
-const usdcContractAddress = '0x450e72Dd025E7396a8E6707D84763f30D0655cEA';
+const usdtContractAddress = '0x55d398326f99059fF775485246999027B3197955';
+const usdcContractAddress = '0x8AC76a51cc950d9822D68b83fE1Ad97B32Cd580d';
 
 const TPHero = () => {
   const [val, setVal] = useState(0);
@@ -189,7 +189,7 @@ const TPHero = () => {
             data-aos="fade-up"
             data-aos-duration="1400"
           >
-            <input className="w-full bg-[#010E35] rounded-[17px] hover:ring-2 outline-none px-6 text-xl font-[300] py-4" disabled/>
+            <input className="w-full bg-[#010E35] rounded-[17px] hover:ring-2 outline-none px-6 text-xl font-[300] py-4" />
             <div className="absolute flex justify-between gap-2 md:gap-5 items-center top-4 md:top-3 left-3">
               <img
                 src={Logo}
