@@ -142,7 +142,7 @@ const TPHero = () => {
         >
           SeeseaAI Token Address:
           <br />
-          0x0B6b64e404fa4558343D1cd5f958a9Be05a7e73C
+          0xa213bAf9900A3Bd23f5FCCA909Ced945112f6289
         </p>
         {/* <form onSubmit={handleSubmit}> */}
         <div className="rounded-xl bg-cards1 p-5  md:p-8 mt-10 text-white">
