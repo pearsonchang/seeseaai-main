@@ -19,4 +19,10 @@ export const data_set = [
     value: '292.5k',
     icon: star,
   },
+  {
+    name: 'BlockchainFinanceTrends Data',
+    star: 'Starred',
+    value: '292.5k',
+    icon: star,
+  },
 ];
