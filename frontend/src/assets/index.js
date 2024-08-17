@@ -37,6 +37,7 @@ import purchase from './purchase.png';
 import heat from './heat-load.png';
 import medical from './medical-imaging.png';
 import traffic from './traffic-flow.png';
+import blockchaintrend from './btc.jpg';
 
 export {
   Logo,
@@ -78,4 +79,5 @@ export {
   heat,
   medical,
   traffic,
+  blockchaintrend,
 };
