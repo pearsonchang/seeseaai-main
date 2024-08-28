@@ -2,7 +2,7 @@ import { useState } from 'react';
 import ComingSoon from '../../components/modal/ComingSoon';
 import DSCards from './components/DSCards';
 import DSHero from './components/DSHero';
-import { heat, medical, traffic, blockchaintrend } from '../../assets';
+import { heat, medical, traffic, blockchaintrend, ehr} from '../../assets';
 
 const Dataset = () => {
   const [modalOpen, setModalOpen] = useState(false);
@@ -82,6 +82,17 @@ const Dataset = () => {
     'Market Analysis',
   ];
 
+  const fifth_array = [
+    'Electronic Health Records (EHR)',
+    'Medical Data',
+    'Data Anonymization',
+    'Medical Research',
+    'Health Informatics',
+    'Disease Prediction',
+    'Medication Usage',
+    'Laboratory Result',
+  ];
+
   return (
     <div>
       <DSHero handleComingSoonModalClick={handleComingSoonModalClick} />
@@ -102,15 +113,22 @@ const Dataset = () => {
         />
         <DSCards
           code_name="3 Years Urban Traffic Data"
-          description="Three Years of Hourly Traffic Flow Data from 1500 Road Sensors in European Urban Areas is a detailed dataset that provides traffic flow information collected from 1500 road sensors installed across various urban areas in Europe. Spanning three years, the dataset includes hourly traffic counts, vehicle classifications, and speed measurements. Each data point is supplemented with contextual information such as location, weather conditions, and time of day. This dataset is ideal for research in traffic flow analysis, urban traffic management, transportation planning, and the development of intelligent transportation systems.; "
+          description="Three Years of Hourly Traffic Flow Data from 1500 Road Sensors in European Urban Areas is a detailed dataset that provides traffic flow information collected from 1500 road sensors installed across various urban areas in Europe. Spanning three years, the dataset includes hourly traffic counts, vehicle classifications, and speed measurements. Each data point is supplemented with contextual information such as location, weather conditions, and time of day. This dataset is ideal for research in traffic flow analysis, urban traffic management, transportation planning, and the development of intelligent transportation systems. "
           arrays={third_array}
           image={traffic}
         />
         <DSCards
           code_name="BlockchainFinanceTrends Data"
-          description="The BlockchainFinanceTrends dataset compiles comprehensive data on the application of blockchain technology in the financial sector worldwide. It includes transaction records from decentralized finance (DeFi) platforms, price volatility in cryptocurrency markets, case studies of blockchain technology adoption in banking and financial services, and the development trends of major global blockchain finance projects. This dataset also covers details on the use of blockchain technology in cross-border payments, smart contracts, and supply chain finance, providing researchers and financial analysts with deep insights into the impact of blockchain on the traditional financial system.;"
+          description="The BlockchainFinanceTrends dataset compiles comprehensive data on the application of blockchain technology in the financial sector worldwide. It includes transaction records from decentralized finance (DeFi) platforms, price volatility in cryptocurrency markets, case studies of blockchain technology adoption in banking and financial services, and the development trends of major global blockchain finance projects. This dataset also covers details on the use of blockchain technology in cross-border payments, smart contracts, and supply chain finance, providing researchers and financial analysts with deep insights into the impact of blockchain on the traditional financial system."
           arrays={forth_array}
           image={blockchaintrend}
+        />
+
+        <DSCards
+          code_name="EHRCare 2024"
+          description="EHRCare 2024 is a comprehensive Electronic Health Record (EHR) dataset containing patient health information from multiple healthcare institutions. The dataset includes a wide range of medical service records such as patient demographics, diagnoses, treatment plans, medication usage, laboratory results, imaging data, and follow-up records. The EHRCare 2024 dataset has undergone rigorous data cleaning and anonymization processes to protect patient privacy. It is suitable for medical research, machine learning model training, disease prediction analysis, and health informatics."
+          arrays={fifth_array}
+          image={ehr}
         />
       </div>
     </div>
